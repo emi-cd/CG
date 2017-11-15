@@ -1,5 +1,8 @@
+#include <iostream>
 #include <GLUT/glut.h>
-#include <stdio.h>
+
+#include "display.hpp"
+
 // http://www.natural-science.or.jp/article/20091124233406.php
 int WindowPositionX = 100;  //生成するウィンドウ位置のX座標
 int WindowPositionY = 100;  //生成するウィンドウ位置のY座標
@@ -8,43 +11,20 @@ int WindowHeight = 512;    //生成するウィンドウの高さ
 char WindowTitle[] = "世界の始まり";  //ウィンドウのタイトル
 
 //----------------------------------------------------
-// 直方体の定義
+// 視点の初期条件
 //----------------------------------------------------
-GLdouble wall_one[][3] = {
-  { 0.0, 0.0, 0.0 },
-  { 30.0, 0.0, 0.0 },
-  { 30.0, 100.0, 0.0 },
-  { 0.0, 100.0, 0.0 },
-  { 0.0, 0.0, 70.0 },
-  { 30.0, 0.0, 70.0 },
-  { 30.0, 100.0, 70.0 },
-  { 0.0, 100.0, 70.0 }
-};
-GLdouble wall_two[][3] = {
-  { -90.0, 0.0, 0.0 },
-  { -60.0, 0.0, 0.0 },
-  { -60.0, 100.0, 0.0 },
-  { -90.0, 100.0, 0.0 },
-  { -90.0, 0.0, 70.0 },
-  { -60.0, 0.0, 70.0 },
-  { -60.0, 100.0, 70.0 },
-  { -90.0, 100.0, 70.0 }
-};
-int face[][4] = {//面の定義
-  { 0, 1, 2, 3 },
-  { 1, 5, 6, 2 },
-  { 5, 4, 7, 6 },
-  { 4, 0, 3, 7 },
-  { 4, 5, 1, 0 },
-  { 3, 2, 6, 7 }
-};
+double ViewPointX = 0.0;
+double ViewPointY = -200.0; 
+double ViewPointZ = 30.0;
+double Side = 0.0;
 
 //----------------------------------------------------
 // 関数プロトタイプ（後に呼び出す関数名と引数の宣言）
 //----------------------------------------------------
 void Initialize(void);
-void Display(void);
-void Ground(void);  //大地の描画
+void Idle();
+void Keyboard(unsigned char key, int x, int y);
+void SpecialKeyBord(int key, int x, int y);
 
 //----------------------------------------------------
 // メイン関数
@@ -56,7 +36,11 @@ int main(int argc, char *argv[]){
   glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);//ディスプレイモードの指定
   glutCreateWindow(WindowTitle);  //ウィンドウの作成
   glutDisplayFunc(Display); //描画時に呼び出される関数を指定する（関数名：Display）
+  glutIdleFunc(Idle);       //プログラムアイドル状態時に呼び出される関数
+  glutKeyboardFunc(Keyboard);//キーボード入力時に呼び出される関数を指定する（関数名：Keyboard）
+  glutSpecialFunc(SpecialKeyBord); //特殊文字を受け取る
   Initialize(); //初期設定の関数を呼び出す
+
   glutMainLoop();
   return 0;
 }
@@ -68,66 +52,70 @@ void Initialize(void){
   glClearColor(1.0, 1.0, 1.0, 1.0); //背景色
   glEnable(GL_DEPTH_TEST);//デプスバッファを使用：glutInitDisplayMode() で GLUT_DEPTH を指定する
 
-  gluPerspective(30.0, (double)WindowWidth/(double)WindowHeight, 0.1, 1000.0); //透視投影法の視体積gluPerspactive(th, w/h, near, far);
-  gluLookAt(
-       0.0, -100.0, 50.0, // 視点の位置x,y,z;
-       0.0, 0.0, 30.0,   // カメラが見ている位置,y,z
-       0.0, 0.0, 1.0);  //カメラの上方向がどれくらいかx,y,z
+  //光源の設定-------------------------------------- 
+  // http://www.natural-science.or.jp/article/20101115171505.php
+  GLfloat light_position0[] = { 0.0, 0.0, 50.0, 1.0 }; //光源0の座標
+  glLightfv(GL_LIGHT0, GL_POSITION, light_position0); //光源0を
 
   }
 
 //----------------------------------------------------
-// 描画の関数
+// アイドル時に呼び出される関数
 //----------------------------------------------------
-void Display(void) {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //バッファの消去
-
-  //直方体
-  glPushMatrix();
-  glColor3d(0.0, 1.0, 1.0);//色の設定
-  glTranslated(30.0, 50.0, 0.0);//平行移動値の設定
-  glBegin(GL_QUADS);
-  for (int j = 0; j < 6; ++j) {
-    for (int i = 0; i < 4; ++i) {
-      glVertex3dv(wall_one[face[j][i]]);
-    }
-  }
-  glEnd();
-  glPopMatrix();
-  //直方体2
-  glPushMatrix();
-  glColor3d(0.0, 1.0, 1.0);//色の設定
-  glTranslated(30.0, 50.0, 0.0);//平行移動値の設定
-  glBegin(GL_QUADS);
-  for (int j = 0; j < 6; ++j) {
-    for (int i = 0; i < 4; ++i) {
-      glVertex3dv(wall_two[face[j][i]]);
-    }
-  }
-  glEnd();
-  glPopMatrix();
-
-  // 大地
-  Ground();
-
-  glutSwapBuffers(); //glutInitDisplayMode(GLUT_DOUBLE)でダブルバッファリングを利用可
+void Idle(){
+  glutPostRedisplay(); //glutDisplayFunc()を１回実行する
 }
 
 //----------------------------------------------------
-// 大地の描画
+// キーボード入力時に呼び出される関数
 //----------------------------------------------------
-void Ground(void) {
-    double ground_max_x = 300.0;
-    double ground_max_y = 300.0;
-    glColor3d(0.8, 0.8, 0.8);  // 大地の色
-    glBegin(GL_LINES);
-    for(double ly = -ground_max_y ;ly <= ground_max_y; ly+=10.0){
-      glVertex3d(-ground_max_x, ly,0);
-      glVertex3d(ground_max_x, ly,0);
-    }
-    for(double lx = -ground_max_x ;lx <= ground_max_x; lx+=10.0){
-      glVertex3d(lx, ground_max_y,0);
-      glVertex3d(lx, -ground_max_y,0);
-    }
-    glEnd();
+void Keyboard(unsigned char key, int x, int y){
+  switch ( key ) {
+  case 'q':
+    exit(0);
+    break;
+  case 'l':
+  case 'L':
+  	Side += 10.0;
+  	break;
+  case 'r':
+  case 'R':
+  	Side -= 10.0;
+  	break;
+  default:
+    break;
+  }
+}
+
+//----------------------------------------------------
+// 特殊文字入力時に呼び出される関数
+//----------------------------------------------------
+void SpecialKeyBord(int key, int x, int y){
+  switch ( key ) {
+  case GLUT_KEY_LEFT:
+    printf("LEFT\n");
+    ViewPointX -= 10.0;
+    Side -= 10.0;
+    break;
+  case GLUT_KEY_RIGHT:
+  	printf("RIGHT\n");
+  	ViewPointX += 10.0;
+  	Side += 10.0;
+  	break;
+  case GLUT_KEY_UP:
+  	printf("UP\n");
+  	ViewPointY += 10.0;
+  	break;
+  case GLUT_KEY_DOWN:
+  	printf("DOWN\n");
+  	ViewPointY -= 10.0;
+  	break;
+  default:
+    break;
+  }
+  //視点の設定------------------------------
+  gluLookAt(		// http://atelier-yoka.com/dev_android/p_main.php?file=apigluglulookat
+       ViewPointX, ViewPointY, ViewPointZ, // 視点の位置x,y,z;
+       Side, ViewPointY + 200, 30.0,   // カメラが見ている位置x,y,z
+       0.0, 0.0, 1.0);  //カメラの上方向がどれくらいかx,y,z
 }
