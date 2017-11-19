@@ -41,7 +41,7 @@ void Display(void) {
   //透視変換行列の設定------------------------------
   glMatrixMode(GL_PROJECTION);//行列モードの設定（GL_PROJECTION : 透視変換行列の設定、GL_MODELVIEW：モデルビュー変換行列）
   glLoadIdentity();//行列の初期化
-  gluPerspective(80.0, (double)WindowWidth/(double)WindowHeight, 0.1, 500.0); //透視投影法の視体積gluPerspactive(th, w/h, near, far);
+  gluPerspective(80.0, (double)WindowWidth/(double)WindowHeight, 0.1, 190.0); //透視投影法の視体積gluPerspactive(th, w/h, near, far);
 
   //視点の設定------------------------------
   gluLookAt(		// http://atelier-yoka.com/dev_android/p_main.php?file=apigluglulookat

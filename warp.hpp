@@ -2,7 +2,7 @@
 #define   _WARP_HPP_
 
 void Warp(void);
-int next(int n);
+void next(int n);
 void make_init();
 
 

@@ -154,34 +154,35 @@ void go_front() {
 bool can_go() {
 	switch(Scene) {
 		case 0:
-			if(ViewPointY < 360 && ViewPointX == 0) 
+			if(ViewPointY < 220 && ViewPointX == 0) 
 				return true;
-			else if(360 == ViewPointY)
+			else if(210 == ViewPointY)
 				return true;
-			else if(300 < ViewPointY && ViewPointY < 360) {
-				ViewPointY = 360;
-				SideY = 360;
+			else if(170 < ViewPointY && ViewPointY < 220) {
+				ViewPointY = 210;
+				SideY = 210;
 				return true;
 			}
 			break;
 		case 1:
 			if(ViewPointX == 0)
 				return true;
-			else if(300 < ViewPointY && ViewPointY < 360 && 0 <= ViewPointX) {
-				ViewPointY = 360;
-				SideY = 360;
+			else if(ViewPointY == 210)
 				return true;
-			}else if(ViewPointY == 360)
+			else if(170 < ViewPointY && ViewPointY < 220 && 0 <= ViewPointX) {
+				ViewPointY = 210;
+				SideY = 210;
 				return true;
+			}
 			break;
 		case 2:
 			if(ViewPointX == 0)
 				return true;
-			else if(ViewPointY == 360)
+			else if(ViewPointY == 210)
 				return true;
-			else if(300 < ViewPointY && ViewPointY < 360) {
-				ViewPointY = 360;
-				SideY = 360;
+			else if(170 < ViewPointY && ViewPointY < 220) {
+				ViewPointY = 210;
+				SideY = 210;
 				return true;
 			}
 			break;
