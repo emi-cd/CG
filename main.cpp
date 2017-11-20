@@ -59,6 +59,15 @@ void Initialize(void){
 	// http://www.natural-science.or.jp/article/20101115171505.php
 	GLfloat light_position0[] = { 0.0, 0.0, 50.0, 1.0 }; //光源0の座標
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position0); //光源0を
+
+	// 霧
+	//フォグの設定
+         glEnable(GL_FOG);
+	 glFogi(GL_FOG_MODE, GL_EXP);
+	 glFogf(GL_FOG_DENSITY, 0.02);
+	 float fog_color[] = {0.8, 0.8, 0.8, 1.0};
+	 glFogfv(GL_FOG_COLOR, fog_color);
+	 glClearColor(0.8, 0.8, 0.8, 1.0);
  }
 
 //----------------------------------------------------
