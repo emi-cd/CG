@@ -17,13 +17,13 @@ void Keyboard(unsigned char key, int x, int y){
 		case 'L':
 			SideX += 10.0;
 			break;
-  		case 'r':
-  		case 'R':
+		case 'r':
+		case 'R':
 			SideX -= 10.0;
 			break;
-  		default:
+		default:
 			break;
-  	}
+	}
 }
 
 //----------------------------------------------------
@@ -120,7 +120,9 @@ void SpecialKeyBord(int key, int x, int y){
 			}
 			break;
 	}
+
 	Warp();
+
 	std::cout << "direction:" << direction << std::endl;
 	std::cout << "Y:" << ViewPointY << ",SideY:" << SideY << std::endl; 
 	std::cout << "X:" << ViewPointX << ",SideX:" << SideX << std::endl; 

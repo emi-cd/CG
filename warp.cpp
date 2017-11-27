@@ -1,4 +1,5 @@
-#include "iostream"
+#include <stdlib.h>
+#include <iostream>
 #include <GLUT/glut.h>
 #include "display.hpp"
 #include "keybord.hpp"
@@ -6,13 +7,14 @@
 #include "warp.hpp"
 
 namespace Labyrinth {
-	int Node[6][5] = {
+	int Node[7][5] = {
 		{-1, 0, 1, 5, -1},
 		{-1, 2, 2, 3, 5},
 		{-1, 1, 1, 3, -1},
 		{-1, 0, 2, 4, -1},
 		{-1, 1, 3, 6, -1},
 		{-1, 2, 2, 3, 4},
+		{-1, 3, -1, -1, -1},
 	};
 	int node = 0;
 
@@ -63,13 +65,26 @@ void Warp() {
 	std::cout << Scene << std::endl;
 }
 
+bool can_goal(void) {
+	int sum = 0;
+	for(int i = 0; i < 5; i++)
+		sum += mp[i];
+	if(sum == 5)
+		return true;
+	return false;
+
+}
+
 void next(int n){
 	int next = Labyrinth::get_node(n+1);
-	if(next != 6){
-		Scene = next;
-		make_init();
-	}
+	if (!can_goal() && next == 3)
+		next = 1;
+	Scene = next;
+	make_init();
 
+	// Teapot.
+	size = std::rand() % 3 + 6;		// Teapot のサイズ
+	tea_index = std::rand() % 20;
 }
 
 void make_init() {

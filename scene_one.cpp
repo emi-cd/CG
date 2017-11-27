@@ -59,7 +59,7 @@ namespace One {
 		{ 30.0, 130.0, 70.0 }
 	};
 }
-int face[][4] = {//面の定義
+int face[][4] = {			// 面の定義
 	{ 0, 1, 2, 3 },
 	{ 1, 5, 6, 2 },
 	{ 5, 4, 7, 6 },
@@ -67,7 +67,7 @@ int face[][4] = {//面の定義
 	{ 4, 5, 1, 0 },
 	{ 3, 2, 6, 7 }
 };
-GLdouble normal[][3] = {//面の法線ベクトル
+GLdouble normal[][3] = {	// 面の法線ベクトル
 	{ 0.0, 0.0,-1.0 },
 	{ 1.0, 0.0, 0.0 },
 	{ 0.0, 0.0, 1.0 },
@@ -83,16 +83,17 @@ void Scene_one() {
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, ms_ruby.diffuse);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, ms_ruby.specular);
 	glMaterialfv(GL_FRONT, GL_SHININESS, &ms_ruby.shininess);
-	glTranslated(30.0, 50.0, 0.0);//平行移動値の設定
+	glTranslated(30.0, 50.0, 0.0);							//平行移動値の設定
 	glBegin(GL_QUADS);
 	for (int j = 0; j < 6; ++j) {
-		glNormal3dv(normal[j]); //法線ベクトルの指定
+		glNormal3dv(normal[j]);								//法線ベクトルの指定
 		for (int i = 0; i < 4; ++i) {
 			glVertex3dv(One::wall_one[face[j][i]]);
 		}
 	}
 	glEnd();
 	glPopMatrix();
+
 	//直方体2
 	glPushMatrix();
 	glMaterialfv(GL_FRONT, GL_AMBIENT, ms_ruby.ambient);
@@ -109,6 +110,7 @@ void Scene_one() {
 	}
 	glEnd();
 	glPopMatrix();
+
 	//直方体3
 	glPushMatrix();
 	glMaterialfv(GL_FRONT, GL_AMBIENT, ms_ruby.ambient);
@@ -125,6 +127,7 @@ void Scene_one() {
 	}
 	glEnd();
 	glPopMatrix();
+
 	//直方体4
 	glPushMatrix();
 	glMaterialfv(GL_FRONT, GL_AMBIENT, ms_ruby.ambient);
@@ -141,6 +144,7 @@ void Scene_one() {
 	}
 	glEnd();
 	glPopMatrix();
+
 	//直方体5
 	glPushMatrix();
 	glMaterialfv(GL_FRONT, GL_AMBIENT, ms_ruby.ambient);
