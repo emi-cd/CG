@@ -3,7 +3,6 @@ all: main
 
 main: main.o display.o scene_one.o scene_two.o scene_three.o keybord.o warp.o
 	g++ main.o display.o scene_one.o scene_two.o scene_three.o keybord.o warp.o -framework GLUT -framework OpenGL -mmacosx-version-min=10.8
-
 main.o: main.cpp
 	g++ main.cpp -mmacosx-version-min=10.8 -c
 

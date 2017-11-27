@@ -14,4 +14,9 @@ extern double ViewPointZ;
 extern double SideX;
 extern double SideY;
 
+// For Teapot animation... ---------
+extern int size;
+extern int tea_index;
+extern int mp[5];
+
 #endif // _WARP_HPP_
