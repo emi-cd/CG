@@ -3,100 +3,104 @@
 
 #include "scene_three.hpp"
 
+//----------------------------------------------------
+// 直方体の定義
+//----------------------------------------------------
 namespace Three {
-	//----------------------------------------------------
-	// 直方体の定義
-	//----------------------------------------------------
+
 	GLdouble wall_one[][3] = {
-		{ 0.0, -300.0, 0.0 },
-		{ 30.0, -300.0, 0.0 },
-		{ 30.0, 130.0, 0.0 },
-		{ 0.0, 130.0, 0.0 },
-		{ 0.0, -300.0, 70.0 },
-		{ 30.0, -300.0, 70.0 },
-		{ 30.0, 130.0, 70.0 },
-		{ 0.0, 130.0, 70.0 }
+		{ 30.0, -100.0, 0.0 },
+		{ 60.0, -100.0, 0.0 },
+		{ 60.0, 100.0, 0.0 },
+		{ 30.0, 100.0, 0.0 },
+		{ 30.0, -100.0, 70.0 },
+		{ 60.0, -100.0, 70.0 },
+		{ 60.0, 100.0, 70.0 },
+		{ 30.0, 100.0, 70.0 }
 	};
 	GLdouble wall_two[][3] = {
-		{ -90.0, -300.0, 0.0 },
-		{ -60.0, -300.0, 0.0 },
-		{ -60.0, 130.0, 0.0 },
-		{ -90.0, 130.0, 0.0 },
-		{ -90.0, -300.0, 70.0 },
-		{ -60.0, -300.0, 70.0 },
-		{ -60.0, 130.0, 70.0 },
-		{ -90.0, 130.0, 70.0 }
+		{ -60.0, -100.0, 0.0 },
+		{ -30.0, -100.0, 0.0 },
+		{ -30.0, 100.0, 0.0 },
+		{ -60.0, 100.0, 0.0 },
+		{ -60.0, -100.0, 70.0 },
+		{ -30.0, -100.0, 70.0 },
+		{ -30.0, 100.0, 70.0 },
+		{ -60.0, 100.0, 70.0 }
 	};
 	GLdouble wall_three[][3] = {
-		{ 0.0, 190.0, 0.0 },
-		{ 30.0, 190.0, 0.0 },
-		{ 30.0, 720.0, 0.0 },
-		{ 0.0, 720.0, 0.0 },
-		{ 0.0, 190.0, 70.0 },
-		{ 30.0, 190.0, 70.0 },
-		{ 30.0, 720.0, 70.0 },
-		{ 0.0, 720.0, 70.0 }
+		{ -250.0, 70.0, 0.0 },
+		{ -60.0, 70.0, 0.0 },
+		{ -60.0, 100.0, 0.0 },
+		{ -250.0, 100.0, 0.0 },
+		{ -250.0, 70.0, 70.0 },
+		{ -60.0, 70.0, 70.0 },
+		{ -60.0, 100.0, 70.0 },
+		{ -250.0, 100.0, 70.0 }
 	};
 	GLdouble wall_four[][3] = {
-		{ -90.0, 190.0, 0.0 },
-		{ -60.0, 190.0, 0.0 },
-		{ -60.0, 720.0, 0.0 },
-		{ -90.0, 720.0, 0.0 },
-		{ -90.0, 190.0, 70.0 },
-		{ -60.0, 190.0, 70.0 },
-		{ -60.0, 720.0, 70.0 },
-		{ -90.0, 720.0, 70.0 }
+		{ 60.0, 70.0, 0.0 },
+		{ 250.0, 70.0, 0.0 },
+		{ 250.0, 100.0, 0.0 },
+		{ 60.0, 100.0, 0.0 },
+		{ 60.0, 70.0, 70.0 },
+		{ 250.0, 70.0, 70.0 },
+		{ 250.0, 100.0, 70.0 },
+		{ 60.0, 100.0, 70.0 }
 	};
 	GLdouble wall_five[][3] = {
-		{ 30.0, 190.0, 0.0 },
-		{ 330.0, 190.0, 0.0 },
-		{ 330.0, 230.0, 0.0 },
-		{ 30.0, 230.0, 0.0 },
-		{ 30.0, 190.0, 70.0 },
-		{ 330.0, 190.0, 70.0 },
-		{ 330.0, 230.0, 70.0 },
-		{ 30.0, 230.0, 70.0 }
+		{ 30.0, 160.0, 0.0 },
+		{ 60.0, 160.0, 0.0 },
+		{ 60.0, 330.0, 0.0 },
+		{ 30.0, 330.0, 0.0 },
+		{ 30.0, 160.0, 70.0 },
+		{ 60.0, 160.0, 70.0 },
+		{ 60.0, 330.0, 70.0 },
+		{ 30.0, 330.0, 70.0 }
 	};
 	GLdouble wall_six[][3] = {
-		{ -440.0, 100.0, 0.0 },
-		{ -90.0, 100.0, 0.0 },
-		{ -90.0, 130.0, 0.0 },
-		{ -440.0, 130.0, 0.0 },
-		{ -440.0, 100.0, 70.0 },
-		{ -90.0, 100.0, 70.0 },
-		{ -90.0, 130.0, 70.0 },
-		{ -440.0, 130.0, 70.0 }
+		{ 60.0, 160.0, 0.0 },
+		{ 250.0, 160.0, 0.0 },
+		{ 250.0, 190.0, 0.0 },
+		{ 60.0, 190.0, 0.0 },
+		{ 60.0, 160.0, 70.0 },
+		{ 250.0, 160.0, 70.0 },
+		{ 250.0, 190.0, 70.0 },
+		{ 60.0, 190.0, 70.0 }
 	};
 	GLdouble wall_seven[][3] = {
-		{ 30.0, 100.0, 0.0 },
-		{ 380.0, 100.0, 0.0 },
-		{ 380.0, 130.0, 0.0 },
-		{ 30.0, 130.0, 0.0 },
-		{ 30.0, 100.0, 70.0 },
-		{ 380.0, 100.0, 70.0 },
-		{ 380.0, 130.0, 70.0 },
-		{ 30.0, 130.0, 70.0 }
+		{ -30.0, 160.0, 0.0 },
+		{ -60.0, 160.0, 0.0 },
+		{ -60.0, 350.0, 0.0 },
+		{ -30.0, 350.0, 0.0 },
+		{ -30.0, 160.0, 70.0 },
+		{ -60.0, 160.0, 70.0 },
+		{ -60.0, 350.0, 70.0 },
+		{ -30.0, 350.0, 70.0 }
 	};
 	GLdouble wall_eight[][3] = {
-		{ -440.0, 190.0, 0.0 },
-		{ -90.0, 190.0, 0.0 },
-		{ -90.0, 230.0, 0.0 },
-		{ -440.0, 230.0, 0.0 },
-		{ -440.0, 190.0, 70.0 },
-		{ -90.0, 190.0, 70.0 },
-		{ -90.0, 230.0, 70.0 },
-		{ -440.0, 230.0, 70.0 }
+		{ -60.0, 160.0, 0.0 },
+		{ -250.0, 160.0, 0.0 },
+		{ -250.0, 190.0, 0.0 },
+		{ -60.0, 190.0, 0.0 },
+		{ -60.0, 160.0, 70.0 },
+		{ -250.0, 160.0, 70.0 },
+		{ -250.0, 190.0, 70.0 },
+		{ -60.0, 190.0, 70.0 }
 	};
 }
 
 void Scene_three() {
-	//直方体1
+
 	glPushMatrix();
-	glMaterialfv(GL_FRONT, GL_AMBIENT, ms_ruby.ambient);    // http://www.field-and-network.jp/rihei/20091006170714.php
+
+	// 材質の設定
+	glMaterialfv(GL_FRONT, GL_AMBIENT, ms_ruby.ambient);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, ms_ruby.diffuse);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, ms_ruby.specular);
 	glMaterialfv(GL_FRONT, GL_SHININESS, &ms_ruby.shininess);
-	glTranslated(30.0, 50.0, 0.0);//平行移動値の設定
+
+	// 直方体1
 	glBegin(GL_QUADS);
 	for (int j = 0; j < 6; ++j) {
 		glNormal3dv(normal[j]); //法線ベクトルの指定
@@ -105,14 +109,8 @@ void Scene_three() {
 		}
 	}
 	glEnd();
-	glPopMatrix();
-	//直方体2
-	glPushMatrix();
-	glMaterialfv(GL_FRONT, GL_AMBIENT, ms_ruby.ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, ms_ruby.diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, ms_ruby.specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, &ms_ruby.shininess);
-	glTranslated(30.0, 50.0, 0.0);//平行移動値の設定
+
+	// 直方体2
 	glBegin(GL_QUADS);
 	for (int j = 0; j < 6; ++j) {
 		glNormal3dv(normal[j]); //法線ベクトルの指定
@@ -121,14 +119,8 @@ void Scene_three() {
 		}
 	}
 	glEnd();
-	glPopMatrix();
-	//直方体3
-	glPushMatrix();
-	glMaterialfv(GL_FRONT, GL_AMBIENT, ms_ruby.ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, ms_ruby.diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, ms_ruby.specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, &ms_ruby.shininess);
-	glTranslated(30.0, 50.0, 0.0);//平行移動値の設定
+
+	// 直方体3
 	glBegin(GL_QUADS);
 	for (int j = 0; j < 6; ++j) {
 		glNormal3dv(normal[j]); //法線ベクトルの指定
@@ -137,14 +129,8 @@ void Scene_three() {
 		}
 	}
 	glEnd();
-	glPopMatrix();
-	//直方体4
-	glPushMatrix();
-	glMaterialfv(GL_FRONT, GL_AMBIENT, ms_ruby.ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, ms_ruby.diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, ms_ruby.specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, &ms_ruby.shininess);
-	glTranslated(30.0, 50.0, 0.0);//平行移動値の設定
+
+	// 直方体4
 	glBegin(GL_QUADS);
 	for (int j = 0; j < 6; ++j) {
 		glNormal3dv(normal[j]); //法線ベクトルの指定
@@ -153,14 +139,8 @@ void Scene_three() {
 		}
 	}
 	glEnd();
-	glPopMatrix();
-	//直方体5
-	glPushMatrix();
-	glMaterialfv(GL_FRONT, GL_AMBIENT, ms_ruby.ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, ms_ruby.diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, ms_ruby.specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, &ms_ruby.shininess);
-	glTranslated(30.0, 50.0, 0.0);//平行移動値の設定
+
+	// 直方体5
 	glBegin(GL_QUADS);
 	for (int j = 0; j < 6; ++j) {
 		glNormal3dv(normal[j]); //法線ベクトルの指定
@@ -169,14 +149,8 @@ void Scene_three() {
 		}
 	}
 	glEnd();
-	glPopMatrix();
-	//直方体6
-	glPushMatrix();
-	glMaterialfv(GL_FRONT, GL_AMBIENT, ms_ruby.ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, ms_ruby.diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, ms_ruby.specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, &ms_ruby.shininess);
-	glTranslated(30.0, 50.0, 0.0);//平行移動値の設定
+
+	// 直方体6
 	glBegin(GL_QUADS);
 	for (int j = 0; j < 6; ++j) {
 		glNormal3dv(normal[j]); //法線ベクトルの指定
@@ -185,14 +159,8 @@ void Scene_three() {
 		}
 	}
 	glEnd();
-	glPopMatrix();
-	//直方体7
-	glPushMatrix();
-	glMaterialfv(GL_FRONT, GL_AMBIENT, ms_ruby.ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, ms_ruby.diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, ms_ruby.specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, &ms_ruby.shininess);
-	glTranslated(30.0, 50.0, 0.0);//平行移動値の設定
+
+	// 直方体7
 	glBegin(GL_QUADS);
 	for (int j = 0; j < 6; ++j) {
 		glNormal3dv(normal[j]); //法線ベクトルの指定
@@ -201,14 +169,8 @@ void Scene_three() {
 		}
 	}
 	glEnd();
-	glPopMatrix();
-	//直方体8
-	glPushMatrix();
-	glMaterialfv(GL_FRONT, GL_AMBIENT, ms_ruby.ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, ms_ruby.diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, ms_ruby.specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, &ms_ruby.shininess);
-	glTranslated(30.0, 50.0, 0.0);//平行移動値の設定
+
+	// 直方体8
 	glBegin(GL_QUADS);
 	for (int j = 0; j < 6; ++j) {
 		glNormal3dv(normal[j]); //法線ベクトルの指定
@@ -217,6 +179,7 @@ void Scene_three() {
 		}
 	}
 	glEnd();
+
 	glPopMatrix();
 
 }

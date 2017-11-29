@@ -10,7 +10,7 @@ int WindowPositionX = 100;  //生成するウィンドウ位置のX座標
 int WindowPositionY = 100;  //生成するウィンドウ位置のY座標
 int WindowWidth = 512;    //生成するウィンドウの幅
 int WindowHeight = 512;    //生成するウィンドウの高さ
-char WindowTitle[] = "迷路";  //ウィンドウのタイトル
+char WindowTitle[] = "Teapot's Labyrinth";  //ウィンドウのタイトル
 
 //----------------------------------------------------
 // 視点の初期条件
@@ -55,12 +55,12 @@ int main(int argc, char *argv[]){
 //----------------------------------------------------
 void Set_fog(void) {
 	glFogi(GL_FOG_MODE, GL_LINEAR);
-	glFogf(GL_FOG_DENSITY, 0.03);
-	float fog_color[] = {0.8, 0.8, 0.8, 1.0};
+	glFogf(GL_FOG_DENSITY, 0.5);
+	float fog_color[] = {0.6627, 0.6627, 0.6627, 1.0};
 	glFogfv(GL_FOG_COLOR, fog_color);
 	glFogf(GL_FOG_START, 10.0);  //開始位置
 	glFogf(GL_FOG_END, 70.0); //終了位置
-	glClearColor(0.8, 0.8, 0.8, 1.0);
+	glClearColor(0.6627, 0.6627, 0.6627, 1.0);
 	glEnable(GL_FOG);
 }
 
@@ -68,17 +68,20 @@ void Set_fog(void) {
 // 初期設定の関数
 //----------------------------------------------------
 void Initialize(void){
-	glClearColor(0.8, 0.8, 0.8, 0.5); //背景色
+	glClearColor(0.0, 0.0, 0.0, 1.0); //背景色
 	glEnable(GL_DEPTH_TEST);//デプスバッファを使用：glutInitDisplayMode() で GLUT_DEPTH を指定する
 
 	//光源の設定-------------------------------------- 
 	// http://www.natural-science.or.jp/article/20101115171505.php
-	GLfloat lightDiffuse[4]  = {0.8, 0.8, 0.8, 1.0};		//拡散光
+	GLfloat lightDiffuse[4]  = {0.7, 0.7, 0.7, 1.0};		//拡散光
 	GLfloat lightAmbient[4]  = {0.2, 0.2, 0.2, 1.0};		//環境光
-	GLfloat lightSpecular[4] = {0.8, 0.8, 0.8, 1.0};		//鏡面光
+	GLfloat lightSpecular[4] = {1.0, 1.0, 1.0, 1.0};		//鏡面光
 	glLightfv(GL_LIGHT0, GL_DIFFUSE,  lightDiffuse);
 	glLightfv(GL_LIGHT0, GL_AMBIENT,  lightAmbient);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
+
+	GLfloat light_position0[] = {0, 210, 100.0, 1.0};	// 光源0の座標
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position0);
 
 	Set_fog();
  }

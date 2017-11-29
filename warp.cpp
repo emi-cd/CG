@@ -12,7 +12,7 @@ namespace Labyrinth {
 		{-1, 2, 2, 3, 5},
 		{-1, 1, 1, 3, -1},
 		{-1, 0, 2, 4, -1},
-		{-1, 1, 3, 6, -1},
+		{-1, 1, 3, 5, -1},
 		{-1, 2, 2, 3, 4},
 		{-1, 3, -1, -1, -1},
 	};
@@ -42,18 +42,19 @@ namespace Labyrinth {
 }
 
 void Warp() {
+	// 次のシーンへ飛ぶ条件
 	switch(Scene) {
 		case 0:
-			if (ViewPointX < -120) { next(1); }
+			if (ViewPointX < -60) { next(1); }
 			else if (60 < ViewPointX) { next(2); }
 			break;
 		case 1:
-			if (250 < ViewPointY) { next(1); }
+			if (190 < ViewPointY) { next(1); }
 			else if (60 < ViewPointX) { next(2); }
 			break;
 		case 2:
-			if (ViewPointX < -120) { next(1); }
-			else if (250 < ViewPointY) { next(2); }
+			if (ViewPointX < -60) { next(1); }
+			else if (190 < ViewPointY) { next(2); }
 			else if (60 < ViewPointX) { next(3); }
 			break;
 	}
@@ -62,9 +63,10 @@ void Warp() {
 		make_init();
 	}
 
-	std::cout << Scene << std::endl;
+	std::cout << "Scene:" << Scene << std::endl;
 }
 
+// ゴールできるかどうか
 bool can_goal(void) {
 	int sum = 0;
 	for(int i = 0; i < 5; i++)
@@ -75,18 +77,21 @@ bool can_goal(void) {
 
 }
 
+// 次のシーンを設定する
 void next(int n){
 	int next = Labyrinth::get_node(n+1);
-	if (!can_goal() && next == 3)
-		next = 1;
 	Scene = next;
 	make_init();
+	if (can_goal()){
+		Scene = 3;
+	}
 
 	// Teapot.
 	size = std::rand() % 3 + 6;		// Teapot のサイズ
 	tea_index = std::rand() % 20;
 }
 
+// 視点などの初期化
 void make_init() {
 	ViewPointX = 0.0;
 	ViewPointY = 0.0;

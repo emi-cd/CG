@@ -7,7 +7,7 @@ main.o: main.cpp
 	g++ main.cpp -mmacosx-version-min=10.8 -c
 
 display.o : display.cpp
-	g++ display.cpp -mmacosx-version-min=10.8 -c
+	g++ display.cpp -mmacosx-version-min=10.8 -c 
 
 scene_one.o : scene_one.cpp
 	g++ scene_one.cpp -mmacosx-version-min=10.8 -c

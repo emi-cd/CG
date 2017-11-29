@@ -126,6 +126,7 @@ void SpecialKeyBord(int key, int x, int y){
 	std::cout << "direction:" << direction << std::endl;
 	std::cout << "Y:" << ViewPointY << ",SideY:" << SideY << std::endl; 
 	std::cout << "X:" << ViewPointX << ",SideX:" << SideX << std::endl; 
+	std::cout << "teapot:" << mp[0] << "," << mp[1] << "," << mp[2] << "," << mp[3] << "," << mp[4] << std::endl;
 	std::cout << std::endl;
 }
 
@@ -153,38 +154,39 @@ void go_front() {
 	direction = FRONT;
 }
 
+// 進めるかどうか判断する
 bool can_go() {
 	switch(Scene) {
 		case 0:
-			if(ViewPointY < 220 && ViewPointX == 0) 
+			if(ViewPointY < 130 && ViewPointX == 0) 
 				return true;
-			else if(210 == ViewPointY)
+			else if(130 == ViewPointY)
 				return true;
-			else if(170 < ViewPointY && ViewPointY < 220) {
-				ViewPointY = 210;
-				SideY = 210;
+			else if(90 < ViewPointY && ViewPointY < 130) {
+				ViewPointY = 130;
+				SideY = 130;
 				return true;
 			}
 			break;
 		case 1:
 			if(ViewPointX == 0)
 				return true;
-			else if(ViewPointY == 210)
+			else if(ViewPointY == 130)
 				return true;
-			else if(170 < ViewPointY && ViewPointY < 220 && 0 <= ViewPointX) {
-				ViewPointY = 210;
-				SideY = 210;
+			else if(90 < ViewPointY && ViewPointY < 130 && 0 <= ViewPointX) {
+				ViewPointY = 130;
+				SideY = 130;
 				return true;
 			}
 			break;
 		case 2:
 			if(ViewPointX == 0)
 				return true;
-			else if(ViewPointY == 210)
+			else if(ViewPointY == 130)
 				return true;
-			else if(170 < ViewPointY && ViewPointY < 220) {
-				ViewPointY = 210;
-				SideY = 210;
+			else if(90 < ViewPointY && ViewPointY < 130) {
+				ViewPointY = 130;
+				SideY = 130;
 				return true;
 			}
 			break;

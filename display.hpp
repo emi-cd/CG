@@ -1,12 +1,10 @@
 #ifndef _DISPLAY_HPP_
 #define _DISPLAY_HPP_
 
+// 描画する関数
 void Display(void);
-void Scene_one(void);
-void Ground(void);
-void Goal(void);
 
-
+// 視点の設定
 extern double ViewPointX;
 extern double ViewPointY; 
 extern double ViewPointZ;
@@ -15,6 +13,7 @@ extern double SideY;
 
 extern int WindowWidth;		// 生成するウィンドウの幅
 extern int WindowHeight;	// 生成するウィンドウの高さ
+
 
 extern int face[][4];			// 面の定義
 extern GLdouble normal[][3];	 // 面の法線ベクトル
