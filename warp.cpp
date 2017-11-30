@@ -98,4 +98,5 @@ void make_init() {
 	SideX = 0.0;
 	SideZ = 200.0;
 	direction = FRONT;
+	rot_y = 0;
 }

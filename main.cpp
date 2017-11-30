@@ -101,7 +101,7 @@ void Set_fog(void) {
 	glFogf(GL_FOG_DENSITY, 0.5);
 	float fog_color[] = {0.6627, 0.6627, 0.6627, 1.0};
 	glFogfv(GL_FOG_COLOR, fog_color);
-	glFogf(GL_FOG_START, ViewPointZ+20.0);  //開始位置
+	glFogf(GL_FOG_START, ViewPointZ+10.0);  //開始位置
 	glFogf(GL_FOG_END, ViewPointZ+70.0); //終了位置
 	glClearColor(0.6627, 0.6627, 0.6627, 1.0);
 	glEnable(GL_FOG);
@@ -116,7 +116,7 @@ void Initialize(void){
 
 	//光源の設定-------------------------------------- 
 	// http://www.natural-science.or.jp/article/20101115171505.php
-	GLfloat light_position0[] = {0, 100, 130.0, 1.0};	// 光源0の座標
+	GLfloat light_position0[] = {0, 100.0, 0.0, 1.0};	// 光源0の座標
 	GLfloat lightDiffuse[4]  = {0.7, 0.7, 0.7, 1.0};		//拡散光
 	GLfloat lightAmbient[4]  = {0.2, 0.2, 0.2, 1.0};		//環境光
 	GLfloat lightSpecular[4] = {1.0, 1.0, 1.0, 1.0};		//鏡面光
@@ -126,16 +126,15 @@ void Initialize(void){
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position0);
 
 	// スポットライトの設定
-	GLfloat light_position1[] = { 0.0, 100.0, 130.0, 1.0 }; // スポットライト
-	GLfloat spotDirrection[] = { 0.0, 0.0, -1.0 }; //スポットライトを向ける方向
-	glLightfv(GL_LIGHT1, GL_POSITION, light_position1); 	//座標をセット
-	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spotDirrection ); //スポットライトの向ける方向（デフォルト (0,0,-1.0)）
+	GLfloat light_position1[] = { 0.0, 70.0, 130.0, 1.0 }; 	// スポットライト
+	GLfloat spotDirrection[] = { 0.0, 1.0, 0.0 }; 				//スポットライトを向ける方向
 	glLightfv(GL_LIGHT1, GL_DIFFUSE,  lightDiffuse);
 	glLightfv(GL_LIGHT1, GL_AMBIENT,  lightAmbient);
 	glLightfv(GL_LIGHT1, GL_SPECULAR, lightSpecular);
-	glLightfv(GL_LIGHT1, GL_POSITION, light_position0);
-	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF,  50.0 );// スポットライトの絞り（デフォルト 180.0）
-	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 0.1 );// スポットライトの中心からの減衰の度合い（デフォルト 0）
+	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF,  30.0 );				// スポットライトの絞り（デフォルト 180.0）
+	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 0.1 );				// スポットライトの中心からの減衰の度合い（デフォルト 0）
+	glLightfv(GL_LIGHT1, GL_POSITION, light_position1); 		//座標をセット
+	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spotDirrection ); 	//スポットライトの向ける方向（デフォルト (0,0,-1.0)）
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);		// 光源0を利用
@@ -153,7 +152,7 @@ void Initialize(void){
     	           0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
 
 	// 霧
-	Set_fog();
+	// Set_fog();
  }
 
 //----------------------------------------------------

@@ -19,8 +19,12 @@ extern int face[][4];			// 面の定義
 extern GLdouble normal[][3];	 // 面の法線ベクトル
 
 extern int Scene; 					// 描画するシーン
+
 extern GLdouble texcoord[4][2];
 extern GLdouble texcoord_long[4][2];
+
+extern float rot_y;
+
 //----------------------------------------------------
 // 物質質感の定義
 //----------------------------------------------------

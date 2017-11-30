@@ -15,21 +15,37 @@ void Keyboard(unsigned char key, int x, int y){
 			break;
 		case 'l':
 		case 'L':
-			SideX += 10.0;
+			rot_y -= 2.0;
+			if (rot_y < 0)
+				rot_y += 360.0;
 			break;
 		case 'r':
 		case 'R':
-			SideX -= 10.0;
+			rot_y += 2.0;
+			if( 360.0 < rot_y)
+				rot_y -= 360.0;
 			break;
 		default:
 			break;
 	}
+	if(rot_y < 20.0 || 340.0 < rot_y) {
+		direction = FRONT;
+	}else if(70.0 < rot_y && rot_y < 110.0) {
+		direction = RIGHT;
+	}else if(160.0 < rot_y && rot_y < 200.0) {
+		direction = BACK;
+	}else if(250.0 < rot_y && rot_y < 290) {
+		direction = LEFT;
+	}
+
+	std::cout << "rot_y:" << rot_y << std::endl;
 }
 
 //----------------------------------------------------
 // 特殊文字入力時に呼び出される関数
 //----------------------------------------------------
 void SpecialKeyBord(int key, int x, int y){
+
 	switch (direction) {
 		case FRONT:
 			switch(key) {
@@ -41,8 +57,11 @@ void SpecialKeyBord(int key, int x, int y){
 					break;
 				case GLUT_KEY_UP:
 					ViewPointZ += 10.0;
-					if(can_go())
+					if(can_go()){
+						SideX = ViewPointX;
 						SideZ = ViewPointZ + 200.0;
+						// rot_y = 0.0;
+					}
 					else
 						ViewPointZ -= 10.0;
 					break;
@@ -62,9 +81,11 @@ void SpecialKeyBord(int key, int x, int y){
 					go_front();
 					break;
 				case GLUT_KEY_UP:
-					ViewPointX -= 10.0;
-					if(can_go())
-						SideX = ViewPointX - 200.0;
+					ViewPointX += 10.0;
+					if(can_go()){
+						SideX = ViewPointX;
+						SideZ = ViewPointZ + 200.0;
+					}
 					else 
 						ViewPointX += 10.0;
 					break;
@@ -85,8 +106,11 @@ void SpecialKeyBord(int key, int x, int y){
 					break;
 				case GLUT_KEY_UP:
 					ViewPointZ -= 10.0;
-					if(can_go())
-						SideZ = ViewPointZ - 200.0;
+					if(can_go()){
+						SideX = ViewPointX;
+						SideZ = ViewPointZ + 200.0;
+						// rot_y = 180.0;
+					}
 					else
 						ViewPointZ += 10.0;
 					break;
@@ -106,9 +130,11 @@ void SpecialKeyBord(int key, int x, int y){
 					go_back();
 					break;
 				case GLUT_KEY_UP:
-					ViewPointX += 10.0;
-					if (can_go())
-						SideX = ViewPointX + 200.0;
+					ViewPointX -= 10.0;
+					if (can_go()){
+						SideX = ViewPointX;
+						SideZ = ViewPointZ + 200.0;
+					}
 					else
 						ViewPointX -= 10.0;
 					break;
@@ -119,39 +145,38 @@ void SpecialKeyBord(int key, int x, int y){
 					break;
 			}
 			break;
+		default:
+			break;
 	}
 
 	Warp();
 
 	std::cout << "direction:" << direction << std::endl;
 	std::cout << "Z:" << ViewPointZ << ",SideZ:" << SideZ << std::endl; 
-	std::cout << "X:" << ViewPointX << ",SideX:" << SideX << std::endl; 
+	std::cout << "X:" << ViewPointX << ",SideX:" << SideX << std::endl;
+	std::cout << "rot_y:" << rot_y << std::endl;
 	std::cout << "teapot:" << mp[0] << "," << mp[1] << "," << mp[2] << "," << mp[3] << "," << mp[4] << std::endl;
 	std::cout << std::endl;
 }
 
 void go_left() {
-	SideX = ViewPointX - 200.0;
-	SideZ = ViewPointZ;
 	direction = LEFT;
+	rot_y = 270.0;
 }
 
 void go_right() {
-	SideX = ViewPointX + 200.0;
-	SideZ = ViewPointZ;
 	direction = RIGHT;
+	rot_y = 90.0;
 }
 
 void go_back() {
-	SideX = ViewPointX;
-	SideZ = ViewPointZ - 200.0;
 	direction = BACK;
+	rot_y = 180.0;
 }
 
 void go_front() {
-	SideX = ViewPointX;
-	SideZ = ViewPointZ + 200.0;
 	direction = FRONT;
+	rot_y = 0.0;
 }
 
 // 進めるかどうか判断する

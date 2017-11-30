@@ -17,7 +17,9 @@ extern double ViewPointZ;
 extern double SideX;
 extern double SideZ;
 
-enum Dir {LEFT, FRONT, RIGHT, BACK};
+enum Dir {LEFT, FRONT, RIGHT, BACK, NONE};
 extern Dir direction;
+
+extern float rot_y;
 
 #endif // _KEYBORD_HPP_

@@ -14,6 +14,8 @@ extern double ViewPointZ;
 extern double SideX;
 extern double SideZ;
 
+extern float rot_y;
+
 // For Teapot animation... ---------
 extern int size;
 extern int tea_index;
