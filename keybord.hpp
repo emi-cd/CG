@@ -15,7 +15,7 @@ extern double ViewPointX;
 extern double ViewPointY; 
 extern double ViewPointZ;
 extern double SideX;
-extern double SideY;
+extern double SideZ;
 
 enum Dir {LEFT, FRONT, RIGHT, BACK};
 extern Dir direction;

@@ -49,12 +49,12 @@ void Warp() {
 			else if (60 < ViewPointX) { next(2); }
 			break;
 		case 1:
-			if (190 < ViewPointY) { next(1); }
+			if (190 < ViewPointZ) { next(1); }
 			else if (60 < ViewPointX) { next(2); }
 			break;
 		case 2:
 			if (ViewPointX < -60) { next(1); }
-			else if (190 < ViewPointY) { next(2); }
+			else if (190 < ViewPointZ) { next(2); }
 			else if (60 < ViewPointX) { next(3); }
 			break;
 	}
@@ -94,8 +94,8 @@ void next(int n){
 // 視点などの初期化
 void make_init() {
 	ViewPointX = 0.0;
-	ViewPointY = 0.0;
+	ViewPointZ = 0.0;
 	SideX = 0.0;
-	SideY = 200.0;
+	SideZ = 200.0;
 	direction = FRONT;
 }

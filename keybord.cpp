@@ -40,11 +40,11 @@ void SpecialKeyBord(int key, int x, int y){
 					go_right();
 					break;
 				case GLUT_KEY_UP:
-					ViewPointY += 10.0;
+					ViewPointZ += 10.0;
 					if(can_go())
-						SideY = ViewPointY + 200.0;
+						SideZ = ViewPointZ + 200.0;
 					else
-						ViewPointY -= 10.0;
+						ViewPointZ -= 10.0;
 					break;
 				case GLUT_KEY_DOWN:
 					go_back();
@@ -84,11 +84,11 @@ void SpecialKeyBord(int key, int x, int y){
 					go_left();
 					break;
 				case GLUT_KEY_UP:
-					ViewPointY -= 10.0;
+					ViewPointZ -= 10.0;
 					if(can_go())
-						SideY = ViewPointY - 200.0;
+						SideZ = ViewPointZ - 200.0;
 					else
-						ViewPointY += 10.0;
+						ViewPointZ += 10.0;
 					break;
 				case GLUT_KEY_DOWN:
 					go_front();
@@ -124,7 +124,7 @@ void SpecialKeyBord(int key, int x, int y){
 	Warp();
 
 	std::cout << "direction:" << direction << std::endl;
-	std::cout << "Y:" << ViewPointY << ",SideY:" << SideY << std::endl; 
+	std::cout << "Z:" << ViewPointZ << ",SideZ:" << SideZ << std::endl; 
 	std::cout << "X:" << ViewPointX << ",SideX:" << SideX << std::endl; 
 	std::cout << "teapot:" << mp[0] << "," << mp[1] << "," << mp[2] << "," << mp[3] << "," << mp[4] << std::endl;
 	std::cout << std::endl;
@@ -132,25 +132,25 @@ void SpecialKeyBord(int key, int x, int y){
 
 void go_left() {
 	SideX = ViewPointX - 200.0;
-	SideY = ViewPointY;
+	SideZ = ViewPointZ;
 	direction = LEFT;
 }
 
 void go_right() {
 	SideX = ViewPointX + 200.0;
-	SideY = ViewPointY;
+	SideZ = ViewPointZ;
 	direction = RIGHT;
 }
 
 void go_back() {
 	SideX = ViewPointX;
-	SideY = ViewPointY - 200.0;
+	SideZ = ViewPointZ - 200.0;
 	direction = BACK;
 }
 
 void go_front() {
 	SideX = ViewPointX;
-	SideY = ViewPointY + 200.0;
+	SideZ = ViewPointZ + 200.0;
 	direction = FRONT;
 }
 
@@ -158,35 +158,35 @@ void go_front() {
 bool can_go() {
 	switch(Scene) {
 		case 0:
-			if(ViewPointY < 130 && ViewPointX == 0) 
+			if(ViewPointZ < 130 && ViewPointX == 0) 
 				return true;
-			else if(130 == ViewPointY)
+			else if(130 == ViewPointZ)
 				return true;
-			else if(90 < ViewPointY && ViewPointY < 130) {
-				ViewPointY = 130;
-				SideY = 130;
+			else if(90 < ViewPointZ && ViewPointZ < 130) {
+				ViewPointZ = 130;
+				SideZ = 130;
 				return true;
 			}
 			break;
 		case 1:
 			if(ViewPointX == 0)
 				return true;
-			else if(ViewPointY == 130)
+			else if(ViewPointZ == 130)
 				return true;
-			else if(90 < ViewPointY && ViewPointY < 130 && 0 <= ViewPointX) {
-				ViewPointY = 130;
-				SideY = 130;
+			else if(90 < ViewPointZ && ViewPointZ < 130 && 0 <= ViewPointX) {
+				ViewPointZ = 130;
+				SideZ = 130;
 				return true;
 			}
 			break;
 		case 2:
 			if(ViewPointX == 0)
 				return true;
-			else if(ViewPointY == 130)
+			else if(ViewPointZ == 130)
 				return true;
-			else if(90 < ViewPointY && ViewPointY < 130) {
-				ViewPointY = 130;
-				SideY = 130;
+			else if(90 < ViewPointZ && ViewPointZ < 130) {
+				ViewPointZ = 130;
+				SideZ = 130;
 				return true;
 			}
 			break;

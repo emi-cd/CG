@@ -1,3 +1,5 @@
+#include <fstream>
+#include <iostream>
 #include <GLUT/glut.h>
 #include "display.hpp"
 #include "keybord.hpp"
@@ -16,16 +18,36 @@ char WindowTitle[] = "Teapot's Labyrinth";  //ウィンドウのタイトル
 // 視点の初期条件
 //----------------------------------------------------
 double ViewPointX = 0.0;	// 視点位置
-double ViewPointY = 0.0; 
-double ViewPointZ = 30.0;
+double ViewPointY = 30.0; 
+double ViewPointZ = 0.0;
 double SideX = 0.0;		// 視界の方向
-double SideY = 200.0;
+double SideZ = 200.0;
 Dir direction = FRONT;
 int Scene = 0;
 
 //----------------------------------------------------
+// テクスチャ
+//----------------------------------------------------
+#define checkImageWidth 2048      /* テクスチャの大きさを設定 2**m */
+#define checkImageHeight 1024     /* テクスチャの大きさを設定 2**n */ 
+GLubyte checkImage[checkImageWidth][checkImageHeight][4];
+GLdouble texcoord[4][2] = {
+	{ 0.0, 0.0 },
+	{ 1.0, 0.0 },
+	{ 1.0, 1.0 },
+	{ 0.0, 1.0 }
+};
+GLdouble texcoord_long[4][2] = {
+	{ 0.0, 0.0 },
+	{ 4.0, 0.0 },
+	{ 4.0, 1.0 },
+	{ 0.0, 1.0 }
+};
+
+//----------------------------------------------------
 // 関数プロトタイプ（後に呼び出す関数名と引数の宣言）
 //----------------------------------------------------
+void makeImage(void);
 void Set_fog(void);
 void Initialize(void);
 void Idle();
@@ -51,6 +73,27 @@ int main(int argc, char *argv[]){
 }
 
 //----------------------------------------------------
+// テクスチャを読み込む
+//----------------------------------------------------
+void makeImage(void){
+	std::ifstream ifs("renga2.txt");
+
+	std::string str;
+
+	for (int i = 0; i < checkImageWidth; i++) {
+		for (int j = 0; j < checkImageHeight; j++) {
+			std::getline(ifs,str, ' ');
+			checkImage[i][j][0] = (GLubyte) std::atoi(str.c_str());
+			std::getline(ifs,str, ' ');
+			checkImage[i][j][1] = (GLubyte) std::atoi(str.c_str());
+			std::getline(ifs,str, ' ');
+			checkImage[i][j][2] = (GLubyte) std::atoi(str.c_str());
+			checkImage[i][j][3] = (GLubyte) 255;
+	}  
+  }
+}
+
+//----------------------------------------------------
 // 霧の設定
 //----------------------------------------------------
 void Set_fog(void) {
@@ -58,8 +101,8 @@ void Set_fog(void) {
 	glFogf(GL_FOG_DENSITY, 0.5);
 	float fog_color[] = {0.6627, 0.6627, 0.6627, 1.0};
 	glFogfv(GL_FOG_COLOR, fog_color);
-	glFogf(GL_FOG_START, 10.0);  //開始位置
-	glFogf(GL_FOG_END, 70.0); //終了位置
+	glFogf(GL_FOG_START, ViewPointZ+20.0);  //開始位置
+	glFogf(GL_FOG_END, ViewPointZ+70.0); //終了位置
 	glClearColor(0.6627, 0.6627, 0.6627, 1.0);
 	glEnable(GL_FOG);
 }
@@ -73,16 +116,43 @@ void Initialize(void){
 
 	//光源の設定-------------------------------------- 
 	// http://www.natural-science.or.jp/article/20101115171505.php
+	GLfloat light_position0[] = {0, 100, 130.0, 1.0};	// 光源0の座標
 	GLfloat lightDiffuse[4]  = {0.7, 0.7, 0.7, 1.0};		//拡散光
 	GLfloat lightAmbient[4]  = {0.2, 0.2, 0.2, 1.0};		//環境光
 	GLfloat lightSpecular[4] = {1.0, 1.0, 1.0, 1.0};		//鏡面光
 	glLightfv(GL_LIGHT0, GL_DIFFUSE,  lightDiffuse);
 	glLightfv(GL_LIGHT0, GL_AMBIENT,  lightAmbient);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
-
-	GLfloat light_position0[] = {0, 210, 100.0, 1.0};	// 光源0の座標
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position0);
 
+	// スポットライトの設定
+	GLfloat light_position1[] = { 0.0, 100.0, 130.0, 1.0 }; // スポットライト
+	GLfloat spotDirrection[] = { 0.0, 0.0, -1.0 }; //スポットライトを向ける方向
+	glLightfv(GL_LIGHT1, GL_POSITION, light_position1); 	//座標をセット
+	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spotDirrection ); //スポットライトの向ける方向（デフォルト (0,0,-1.0)）
+	glLightfv(GL_LIGHT1, GL_DIFFUSE,  lightDiffuse);
+	glLightfv(GL_LIGHT1, GL_AMBIENT,  lightAmbient);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, lightSpecular);
+	glLightfv(GL_LIGHT1, GL_POSITION, light_position0);
+	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF,  50.0 );// スポットライトの絞り（デフォルト 180.0）
+	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 0.1 );// スポットライトの中心からの減衰の度合い（デフォルト 0）
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);		// 光源0を利用
+	glEnable(GL_LIGHT1);		// スポットライト
+
+	// テクスチャの設定
+	makeImage();
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+ 	// glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glTexImage2D(GL_TEXTURE_2D, 0, 4, checkImageWidth, checkImageHeight,  
+    	           0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
+
+	// 霧
 	Set_fog();
  }
 

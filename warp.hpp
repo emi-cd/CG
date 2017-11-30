@@ -12,7 +12,7 @@ extern double ViewPointX;
 extern double ViewPointY; 
 extern double ViewPointZ;
 extern double SideX;
-extern double SideY;
+extern double SideZ;
 
 // For Teapot animation... ---------
 extern int size;
