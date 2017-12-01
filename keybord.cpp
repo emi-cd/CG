@@ -196,7 +196,7 @@ bool can_go() {
 		case 1:
 			if(ViewPointX == 0)
 				return true;
-			else if(ViewPointZ == 130)
+			else if(ViewPointZ == 130 && 0 <= ViewPointX)
 				return true;
 			else if(90 < ViewPointZ && ViewPointZ < 130 && 0 <= ViewPointX) {
 				ViewPointZ = 130;
@@ -215,6 +215,22 @@ bool can_go() {
 				return true;
 			}
 			break;
+		case 3:
+			if(ViewPointX == 0 && ViewPointZ < 70)
+				return true;
+			break;
+		case 4:
+			if(ViewPointX == 0)
+				return true;
+			else if(ViewPointZ == 130 && 0 >= ViewPointX )
+				return true;
+			else if(90 < ViewPointZ && ViewPointZ < 130 && 0 >= ViewPointX) {
+				ViewPointZ = 130;
+				SideZ = 130;
+				return true;
+			}
+			break;
+
 	}
 	return false;
 }

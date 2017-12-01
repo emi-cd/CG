@@ -8,18 +8,18 @@
 
 namespace Labyrinth {
 	int Node[7][5] = {
-		{-1, 0, 1, 5, -1},
-		{-1, 2, 2, 3, 5},
-		{-1, 1, 1, 3, -1},
-		{-1, 0, 2, 4, -1},
-		{-1, 1, 3, 5, -1},
-		{-1, 2, 2, 3, 4},
+		{-1, 0,  1,  2, -1},
+		{-1, 1,  3,  4, -1},
+		{-1, 2,  0,  5,  6},
 		{-1, 3, -1, -1, -1},
+		{-1, 4,  3,  6, -1},
+		{-1, 0,  2,  3, -1},
+		{-1, 1,  0,  3, -1},
 	};
 	int node = 0;
 
 	void set_from(int index, int from) {
-		Node[index][0] = from;
+		Node[index][0] = from-1;
 	} 
 
 	void get_from() {
@@ -57,8 +57,15 @@ void Warp() {
 			else if (190 < ViewPointZ) { next(2); }
 			else if (60 < ViewPointX) { next(3); }
 			break;
+		case 3:
+			break;
+		case 4:
+			if (190 < ViewPointZ) { next(1); }
+			else if (-60 < ViewPointX) { next(2); }
+			break;
+
 	}
-	if(ViewPointY < 0) {
+	if(ViewPointZ < 0) {
 		Labyrinth::get_from();
 		make_init();
 	}
@@ -80,10 +87,12 @@ bool can_goal(void) {
 // 次のシーンを設定する
 void next(int n){
 	int next = Labyrinth::get_node(n+1);
-	Scene = next;
-	make_init();
+	if(next != -1){
+		Scene = next;
+		make_init();
+	}
 	if (can_goal()){
-		Scene = 3;
+		Scene = 5;
 	}
 
 	// Teapot.

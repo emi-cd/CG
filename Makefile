@@ -1,8 +1,8 @@
 .PHONY: all
 all: main
 
-main: main.o display.o scene_one.o scene_two.o scene_three.o keybord.o warp.o
-	g++ main.o display.o scene_one.o scene_two.o scene_three.o keybord.o warp.o -framework GLUT -framework OpenGL -mmacosx-version-min=10.8
+main: main.o display.o scene_one.o scene_two.o scene_three.o scene_four.o scene_five.o keybord.o warp.o
+	g++ main.o display.o scene_one.o scene_two.o scene_three.o scene_four.o scene_five.o keybord.o warp.o -framework GLUT -framework OpenGL -mmacosx-version-min=10.8
 main.o: main.cpp
 	g++ main.cpp -mmacosx-version-min=10.8 -c
 
@@ -18,6 +18,12 @@ scene_two.o : scene_two.cpp
 scene_three.o : scene_three.cpp
 	g++ scene_three.cpp -mmacosx-version-min=10.8 -c
 
+scene_four.o : scene_four.cpp
+	g++ scene_four.cpp -mmacosx-version-min=10.8 -c
+
+scene_five.o : scene_five.cpp
+	g++ scene_five.cpp -mmacosx-version-min=10.8 -c
+
 keybord.o : keybord.cpp
 	g++ keybord.cpp -mmacosx-version-min=10.8 -c
 
@@ -26,4 +32,4 @@ warp.o : warp.cpp
 
 .PHONY: clean
 clean:
-	rm -rf  main.o display.o scene_one.o scene_two.o scene_three.o keybord.o warp.o
+	rm -rf  main.o display.o scene_one.o scene_two.o scene_three.o scene_four.o scene_five.o keybord.o warp.o

@@ -10,6 +10,8 @@
 #include "scene_one.hpp"
 #include "scene_two.hpp"
 #include "scene_three.hpp"
+#include "scene_four.hpp"
+#include "scene_five.hpp"
 
 #include "display.hpp"
 
@@ -120,6 +122,17 @@ void Display(void) {
 		Put_teapot();
 		break;
 	case 3:
+		print_teapot_state();
+		teapot();
+		Scene_four();
+		break;
+	case 4:
+		print_teapot_state();
+		teapot();
+		Scene_five();
+		Put_teapot();
+		break;
+	case 5:
 		Goal();
 		break;
 	}
