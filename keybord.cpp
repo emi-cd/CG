@@ -60,7 +60,6 @@ void SpecialKeyBord(int key, int x, int y){
 					if(can_go()){
 						SideX = ViewPointX;
 						SideZ = ViewPointZ + 200.0;
-						// rot_y = 0.0;
 					}
 					else
 						ViewPointZ -= 10.0;
@@ -87,7 +86,7 @@ void SpecialKeyBord(int key, int x, int y){
 						SideZ = ViewPointZ + 200.0;
 					}
 					else 
-						ViewPointX += 10.0;
+						ViewPointX -= 10.0;
 					break;
 				case GLUT_KEY_DOWN:
 					go_right();
@@ -109,7 +108,6 @@ void SpecialKeyBord(int key, int x, int y){
 					if(can_go()){
 						SideX = ViewPointX;
 						SideZ = ViewPointZ + 200.0;
-						// rot_y = 180.0;
 					}
 					else
 						ViewPointZ += 10.0;
@@ -136,7 +134,7 @@ void SpecialKeyBord(int key, int x, int y){
 						SideZ = ViewPointZ + 200.0;
 					}
 					else
-						ViewPointX -= 10.0;
+						ViewPointX += 10.0;
 					break;
 				case GLUT_KEY_DOWN:
 					go_left();
@@ -183,43 +181,42 @@ void go_front() {
 bool can_go() {
 	switch(Scene) {
 		case 0:
-			if(ViewPointZ < 130 && ViewPointX == 0) 
+			if(ViewPointZ > 0 && ViewPointZ < 130 && ViewPointX == 0) 
 				return true;
 			else if(130 == ViewPointZ)
 				return true;
-			else if(90 < ViewPointZ && ViewPointZ < 130) {
+			else if(90 < ViewPointZ && ViewPointZ < 130 && ViewPointX == 0) {
 				ViewPointZ = 130;
 				SideZ = 130;
+				SideX = ViewPointX;
 				return true;
 			}
 			break;
 		case 1:
-			if(ViewPointX == 0)
+			if(ViewPointZ > 0 && ViewPointX == 0)
 				return true;
 			else if(ViewPointZ == 130 && 0 <= ViewPointX)
 				return true;
 			else if(90 < ViewPointZ && ViewPointZ < 130 && 0 <= ViewPointX) {
 				ViewPointZ = 130;
 				SideZ = 130;
+				SideX = ViewPointX;
 				return true;
 			}
 			break;
 		case 2:
-			if(ViewPointX == 0)
+			if(ViewPointZ > 0 && ViewPointX == 0)
 				return true;
 			else if(ViewPointZ == 130)
 				return true;
 			else if(90 < ViewPointZ && ViewPointZ < 130) {
 				ViewPointZ = 130;
 				SideZ = 130;
+				SideX = ViewPointX;
 				return true;
 			}
 			break;
 		case 3:
-			if(ViewPointX == 0 && ViewPointZ < 70)
-				return true;
-			break;
-		case 4:
 			if(ViewPointX == 0)
 				return true;
 			else if(ViewPointZ == 130 && 0 >= ViewPointX )
@@ -227,10 +224,17 @@ bool can_go() {
 			else if(90 < ViewPointZ && ViewPointZ < 130 && 0 >= ViewPointX) {
 				ViewPointZ = 130;
 				SideZ = 130;
+				SideX = ViewPointX;
 				return true;
 			}
 			break;
-
+		case 4:
+			if(ViewPointX == 0 && ViewPointZ > 0 && ViewPointZ < 50)
+				return true;
+			break;
 	}
+	if(ViewPointZ <= 0 && -20.0 < ViewPointZ && ViewPointX == 0)
+		return true;
+
 	return false;
 }

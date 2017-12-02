@@ -16,6 +16,21 @@ extern double SideZ;
 
 extern float rot_y;
 
+extern int old_scene;
+
+
+// 迷路を作る
+typedef struct node{
+	int scene;
+	int num;
+	struct node* parent;
+	struct node* child_one;
+	struct node* child_two;
+	struct node* child_three;
+} Node;
+extern Node* node;
+Node *make_Labyrinth();
+
 // For Teapot animation... ---------
 extern int size;
 extern int tea_index;

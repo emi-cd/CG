@@ -3,6 +3,7 @@
 #include <GLUT/glut.h>
 #include "display.hpp"
 #include "keybord.hpp"
+#include "warp.hpp"
 
 //----------------------------------------------------
 // ウィンドウ構成条件
@@ -24,6 +25,7 @@ double SideX = 0.0;		// 視界の方向
 double SideZ = 200.0;
 Dir direction = FRONT;
 int Scene = 0;
+Node* node = NULL;
 
 //----------------------------------------------------
 // テクスチャ
@@ -111,7 +113,6 @@ void Set_fog(void) {
 // 初期設定の関数
 //----------------------------------------------------
 void Initialize(void){
-	glClearColor(0.0, 0.0, 0.0, 1.0); //背景色
 	glEnable(GL_DEPTH_TEST);//デプスバッファを使用：glutInitDisplayMode() で GLUT_DEPTH を指定する
 
 	//光源の設定-------------------------------------- 
@@ -126,8 +127,8 @@ void Initialize(void){
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position0);
 
 	// スポットライトの設定
-	GLfloat light_position1[] = { 0.0, 70.0, 130.0, 1.0 }; 	// スポットライト
-	GLfloat spotDirrection[] = { 0.0, 1.0, 0.0 }; 				//スポットライトを向ける方向
+	GLfloat light_position1[] = { 0.0, 40.0, 80.0, 1.0 }; 	// スポットライト
+	GLfloat spotDirrection[] = { 0.0, -1.0, 0.0 }; 				//スポットライトを向ける方向
 	glLightfv(GL_LIGHT1, GL_DIFFUSE,  lightDiffuse);
 	glLightfv(GL_LIGHT1, GL_AMBIENT,  lightAmbient);
 	glLightfv(GL_LIGHT1, GL_SPECULAR, lightSpecular);
@@ -138,7 +139,6 @@ void Initialize(void){
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);		// 光源0を利用
-	glEnable(GL_LIGHT1);		// スポットライト
 
 	// テクスチャの設定
 	makeImage();
@@ -147,12 +147,14 @@ void Initialize(void){
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
- 	// glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+ 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glTexImage2D(GL_TEXTURE_2D, 0, 4, checkImageWidth, checkImageHeight,  
     	           0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
 
 	// 霧
-	// Set_fog();
+	Set_fog();
+
+	node = make_Labyrinth();
  }
 
 //----------------------------------------------------

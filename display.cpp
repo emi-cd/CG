@@ -52,6 +52,9 @@ int size = std::rand() % 3 + 5;			// Teapot のサイズ
 int tea_index = std::rand() % 20;		// Teapot の確率
 int mp[5] = {0, 0, 0, 0, 0};
 int x = 0;
+int flag = 0;
+int last_teapot = -1;
+int old_scene = -1;
 
 // 空間
 float rot_y = 0.0;
@@ -107,30 +110,32 @@ void Display(void) {
 		print_teapot_state();
 		teapot();
 		Scene_one();
-		Put_teapot();
+		flag = 1;
 		break;
 	case 1:
 		print_teapot_state();
 		teapot();
 		Scene_two();
-		Put_teapot();
+		flag = 1;
 		break;
 	case 2:
 		print_teapot_state();
 		teapot();
 		Scene_three();
-		Put_teapot();
+		flag = 1;
 		break;
 	case 3:
 		print_teapot_state();
 		teapot();
-		Scene_four();
+		Scene_five();
+		flag = 1;
 		break;
 	case 4:
 		print_teapot_state();
 		teapot();
-		Scene_five();
+		Scene_four();
 		Put_teapot();
+		flag = 0;
 		break;
 	case 5:
 		Goal();
@@ -139,6 +144,14 @@ void Display(void) {
 
 	// 大地
 	Ground();
+
+	if(flag && last_teapot!=-1) {
+		mp[last_teapot] = 1;	
+		last_teapot = -1;
+	}
+
+	x = (x+1)%720000;
+	timer = 3000 + sin(x*0.0005)*3000;
 
 	glutSwapBuffers(); //glutInitDisplayMode(GLUT_DOUBLE)でダブルバッファリングを利用可
 }
@@ -155,10 +168,10 @@ void Ground(void) {
 	glPushMatrix();
 
 	// 大地
-	glColor3d(0.98039, 0.94118, 0.90196);  // 大地の色;
+	glColor3d(0.50196, 0.50196, 0.50196);  // 大地の色;
 	glBegin(GL_QUADS);
 	glVertex3f(-500.0, 0.0, -500.0);
-	glVertex3f(-500.0, 0.0,  500.0);
+	glVertex3f( 500.0, 0.0, -500.0);
 	glVertex3f( 500.0, 0.0, -500.0);
 	glVertex3f( 500.0, 0.0,  500.0);
 	glEnd();
@@ -251,9 +264,6 @@ void Goal(void) {
 	glDisable(GL_COLOR_MATERIAL);
 	glPopMatrix();
 
-	x = (x+1)%720000;
-	timer = 3000 + sin(x*0.0005)*3000;
-
 	DrawString("C O N G R A T U L A T I O N S ! !", 95, 95);
 	DrawString("G O A L !", 210, 150);
 
@@ -294,70 +304,65 @@ void DrawString(std::string str, int x, int y, void *font) {
 // Teapotを生み出す
 //----------------------------------------------------
 void Put_teapot(void) {
-	if(tea_index == 0) {
-		// Teapot1 GOLD!! (1/20)
-		mp[0] = 1;
+	glEnable(GL_LIGHT1);		// スポットライト
+	// Teapot1 GOLD!! (1/10)
+	if(tea_index < 1 && !mp[0]) {
 		glPushMatrix();
 		glMaterialfv(GL_FRONT, GL_AMBIENT, ms_gold.ambient);
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, ms_gold.diffuse);
 		glMaterialfv(GL_FRONT, GL_SPECULAR, ms_gold.specular);
 		glMaterialfv(GL_FRONT, GL_SHININESS, &ms_gold.shininess);
-		glTranslated(0,55, 130);		// ティーポットの移動
+		glTranslated(0, 40, 80);		// ティーポットの移動
 		glRotatef(90.0, 1, 0, 1);		// ティーポットの回転
 		glRotatef(timer*0.2, 0, 0, 1);	// ティーポットの回転
-		glutSolidTeapot(17);				// Teapotの大きさ
+		glutSolidTeapot(17);			// Teapotの大きさ
 		glPopMatrix();
-	}else if(tea_index < 4) {
-		// Teapot2	(3/20)
-		mp[1] = 1;
+		last_teapot = 0;
+	}else if(tea_index < 3 && !mp[1]) {			// Teapot2	(2/10)
 		glPushMatrix();
 		glMaterialfv(GL_FRONT, GL_AMBIENT, ms_pearl.ambient);    // http://www.field-and-network.jp/rihei/20091006170714.php
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, ms_pearl.diffuse);
 		glMaterialfv(GL_FRONT, GL_SPECULAR, ms_pearl.specular);
 		glMaterialfv(GL_FRONT, GL_SHININESS, &ms_pearl.shininess);
-		glTranslated(0, 55, 130);		// ティーポットの移動
+		glTranslated(0, 40, 80);		// ティーポットの移動
 		glRotatef(timer*0.3, 0, 1, 1);	// ティーポットの回転
 		glutSolidTeapot(13);				// Teapotの大きさ
 		glPopMatrix();
-	}else if(tea_index < 7) {
-		// Teapot3	(3/20)
-		mp[2] = 1;
+		last_teapot = 1;
+	}else if(tea_index < 5 && !mp[2]) {			// Teapot3	(2/10)
 		glPushMatrix();
 		glMaterialfv(GL_FRONT, GL_AMBIENT, ms_jade.ambient);
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, ms_jade.diffuse);
 		glMaterialfv(GL_FRONT, GL_SPECULAR, ms_jade.specular);
 		glMaterialfv(GL_FRONT, GL_SHININESS, &ms_jade.shininess);
-		glTranslated(0, 55, 130);			// ティーポットの移動
+		glTranslated(0, 40, 80);			// ティーポットの移動
 		glRotatef(timer*0.1, 1, 1, 1);		// ティーポットの回転
 		glutSolidTeapot(13);					// Teapotの大きさ
 		glDisable(GL_COLOR_MATERIAL);
 		glPopMatrix();
-	}else if(tea_index < 13) {
-		// Teapot4	(6/20)
-		mp[3] = 1;
+		last_teapot = 2;
+	}else if(tea_index && !mp[3]) {				// Teapot4	(2/10)
 		glPushMatrix();
 		glEnable(GL_COLOR_MATERIAL);
 		glColor3d(0.29296,	0.0, 0.5078);	// indigo
-		glTranslated(0, 55, 130);			// ティーポットの移動
+		glTranslated(0, 40, 80);			// ティーポットの移動
 		glRotatef(timer*0.2, 1, 0, 1);		// ティーポットの回転
 		glutSolidTeapot(10);					// Teapotの大きさ
 		glDisable(GL_COLOR_MATERIAL);
 		glPopMatrix();
-	}else {
-		// Teapot5   (7/20)
-		mp[4] = 1;
+		last_teapot = 3;
+	}else if(!mp[4]){								// Teapot4	(2/10)
 		glPushMatrix();
 		glEnable(GL_COLOR_MATERIAL);
 		glColor3d(0.9375,	0.5, 0.5);		// lightcoral
-		glTranslated(0, 55, 130);			// ティーポットの移動
+		glTranslated(0, 40, 80);			// ティーポットの移動
 		glRotatef(timer*0.4, 1, 1, 0);		// ティーポットの回転
 		glutSolidTeapot(10);					// Teapotの大きさ
 		glDisable(GL_COLOR_MATERIAL);
 		glPopMatrix();
+		last_teapot = 4;
 	}
-
-	x = (x+1)%720000;
-	timer = 3000 + sin(x*0.0005)*3000;
+	glDisable(GL_LIGHT1);
 
 }
 
@@ -390,14 +395,14 @@ void teapot(void){
 	glColor3d(0.90196,	0.90196, 1.0);
 
 	glPushMatrix();
-	glTranslated(130+timer*0.01, 60+timer*0.005, 180-timer*0.01);			// ティーポットの移動
+	glTranslated(130+timer*0.01, 60+timer*0.005, 130-timer*0.01);			// ティーポットの移動
 	glRotatef(timer*0.1, 1, 1, 0);		// ティーポットの回転
 	glutWireTeapot(15+5*cos(timer*0.005));					// Teapotの大きさ
 	glPopMatrix();
 
 	glPushMatrix();
 	glEnable(GL_COLOR_MATERIAL);
-	glTranslated(40-timer*0.05, 40+cos(timer*0.005)*10, 180+sin(timer*0.005)*20);			// ティーポットの移動
+	glTranslated(40-timer*0.05, 40+cos(timer*0.005)*10, 130+sin(timer*0.005)*20);			// ティーポットの移動
 	glRotatef(timer*0.2, 1, 0, 0);		// ティーポットの回転
 	glutWireTeapot(15+5*cos(timer*0.01));					// Teapotの大きさ
 	glDisable(GL_COLOR_MATERIAL);
@@ -405,7 +410,7 @@ void teapot(void){
 
 	glPushMatrix();
 	glEnable(GL_COLOR_MATERIAL);
-	glTranslated(-20, 60, 100);			// ティーポットの移動
+	glTranslated(-20, 60, 60);			// ティーポットの移動
 	glRotatef(30.0, 0, 1, 1);		// ティーポットの回転
 	glutWireTeapot(15+5*sin(timer*0.01));					// Teapotの大きさ
 	glDisable(GL_COLOR_MATERIAL);
@@ -413,7 +418,7 @@ void teapot(void){
 
 	glPushMatrix();
 	glEnable(GL_COLOR_MATERIAL);
-	glTranslated(-100, 60, 200);			// ティーポットの移動
+	glTranslated(-100, 60, 100);			// ティーポットの移動
 	glRotatef(70.0, 1, 1, 1);		// ティーポットの回転
 	glutWireTeapot(20+5*cos(timer*0.01));					// Teapotの大きさ
 	glDisable(GL_COLOR_MATERIAL);
@@ -421,9 +426,9 @@ void teapot(void){
 
 	glPushMatrix();
 	glEnable(GL_COLOR_MATERIAL);
-	glTranslated(10+sin(timer*0.005)*30,  60+sin(timer*0.005)*10, 250+cos(timer*0.005)*10);			// ティーポットの移動
+	glTranslated(10+sin(timer*0.005)*30,  60+sin(timer*0.005)*10, 150+cos(timer*0.005)*10);			// ティーポットの移動
 	glRotatef(70.0, 1, 1, 0);		// ティーポットの回転
-	glutWireTeapot(20);					// Teapotの大きさ
+	glutWireTeapot(20+5*cos(timer*0.01));					// Teapotの大きさ
 	glDisable(GL_COLOR_MATERIAL);
 	glPopMatrix();
 
