@@ -236,5 +236,6 @@ bool can_go() {
 	if(ViewPointZ <= 0 && -20.0 < ViewPointZ && ViewPointX == 0)
 		return true;
 
+	printf("\a");
 	return false;
 }
