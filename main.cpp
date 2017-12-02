@@ -115,8 +115,8 @@ void Initialize(void){
 	glEnable(GL_DEPTH_TEST);							//デプスバッファを使用：glutInitDisplayMode() で GLUT_DEPTH を指定する
 
 	// 光源の設定-------------------------------------- 
-	GLfloat light_position0[] = {0, 100.0, 0.0, 1.0};	// 光源0の座標
-	GLfloat lightDiffuse[4]  = {0.3, 0.3, 0.3, 1.0};	// 拡散光
+	GLfloat light_position0[] = {0, 30.0, 0.0, 1.0};	// 光源0の座標
+	GLfloat lightDiffuse[4]  = {0.5, 0.5, 0.5, 1.0};	// 拡散光
 	GLfloat lightAmbient[4]  = {0.2, 0.2, 0.2, 1.0};	// 環境光
 	GLfloat lightSpecular[4] = {0.1, 0.1, 0.1, 1.0};	// 鏡面光
 	glLightfv(GL_LIGHT0, GL_DIFFUSE,  lightDiffuse);
@@ -125,16 +125,16 @@ void Initialize(void){
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position0);
 
 	// スポットライトの設定-------------------------------------- 
-	GLfloat lightDiffuse1[4]  = {0.5, 0.5, 0.5, 1.0};		// 拡散光
-	GLfloat lightAmbient1[4]  = {0.2, 0.2, 0.2, 1.0};		// 環境光
+	GLfloat lightDiffuse1[4]  = {0.7, 0.7, 0.7, 1.0};		// 拡散光
+	GLfloat lightAmbient1[4]  = {0.6, 0.6, 0.6, 1.0};		// 環境光
 	GLfloat lightSpecular1[4] = {0.7, 0.7, 0.7, 1.0};		// 鏡面光
-	GLfloat light_position1[] = { 0.0, 100.0, 80.0, 1.0 }; 	// スポットライト
-	GLfloat spotDirrection[] = { 0.0, -1.0, 0.0 }; 			// スポットライトを向ける方向
+	GLfloat light_position1[] = { 0.0, 30.0, 0.0, 1.0 }; 	// スポットライト
+	GLfloat spotDirrection[] = { 0.0, 30.0, 200.0 }; 			// スポットライトを向ける方向
 	glLightfv(GL_LIGHT1, GL_DIFFUSE,  lightDiffuse1);
 	glLightfv(GL_LIGHT1, GL_AMBIENT,  lightAmbient1);
 	glLightfv(GL_LIGHT1, GL_SPECULAR, lightSpecular1);
 	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF,  30.0 );			 // スポットライトの絞り（デフォルト 180.0）
-	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 0.1 );			 // スポットライトの中心からの減衰の度合い（デフォルト 0）
+	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 0.6 );			 // スポットライトの中心からの減衰の度合い（デフォルト 0）
 	glLightfv(GL_LIGHT1, GL_POSITION, light_position1); 	 //座標をセット
 	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spotDirrection );//スポットライトの向ける方向（デフォルト (0,0,-1.0)）
 

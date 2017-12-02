@@ -59,6 +59,7 @@
 ## 参考にさせていただいたサイト
   - [特定非営利活動法人 natural science](http://www.natural-science.or.jp/) さん
   - [床井研究室](http://marina.sys.wakayama-u.ac.jp/~tokoi/oglarticles.html) さん
+  - [OpenGL de プログラミング](http://seesaawiki.jp/w/mikk_ni3_92/d/%a5%e1%a5%cb%a5%e5%a1%bc) さん
 
 ### 困った時に...
 - プログラムが完璧でなく, たまに変なところへ移動してしまいます. その場合は,終了してください...

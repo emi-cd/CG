@@ -50,7 +50,7 @@ MaterialStruct ms_pearl  = {
 double timer = 0;
 int size = std::rand() % 3 + 5;			// Teapot のサイズ
 int tea_index = std::rand() % 20;		// Teapot の確率
-int mp[5] = {1, 1, 1, 1, 0};
+int mp[5] = {0, 0, 0, 0, 0};
 int x = 0;
 int flag = 0;
 int last_teapot = -1;
@@ -89,7 +89,7 @@ void Display(void) {
 			 0.0, 1.0, 0.0);  //カメラの上方向がどれくらいかx,y,z
 
 	// 光源の設定-----------------------------
-	GLfloat light_position0[] = {ViewPointX, 100.0, ViewPointZ, 1.0};	// 光源0の座標
+	GLfloat light_position0[] = {ViewPointX, 30.0, ViewPointZ, 1.0};	// 光源0の座標
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position0);
 
 	// fog-----------------------------
@@ -423,7 +423,7 @@ void teapot(void){
 
 	glPushMatrix();
 	glEnable(GL_COLOR_MATERIAL);
-	glTranslated(40-timer*0.05, 40+cos(timer*0.005)*10, 130+sin(timer*0.005)*20);			// ティーポットの移動
+	glTranslated(-40-timer*0.05, 40+cos(timer*0.005)*10, 130+sin(timer*0.005)*20);			// ティーポットの移動
 	glRotatef(timer*0.2, 1, 0, 0);		// ティーポットの回転
 	glutWireTeapot(15+5*cos(timer*0.01));					// Teapotの大きさ
 	glDisable(GL_COLOR_MATERIAL);
@@ -431,7 +431,7 @@ void teapot(void){
 
 	glPushMatrix();
 	glEnable(GL_COLOR_MATERIAL);
-	glTranslated(-20, 60, 60);			// ティーポットの移動
+	glTranslated(20, 60, 60);			// ティーポットの移動
 	glRotatef(30.0, 0, 1, 1);		// ティーポットの回転
 	glutWireTeapot(15+5*sin(timer*0.01));					// Teapotの大きさ
 	glDisable(GL_COLOR_MATERIAL);
@@ -447,7 +447,7 @@ void teapot(void){
 
 	glPushMatrix();
 	glEnable(GL_COLOR_MATERIAL);
-	glTranslated(10+sin(timer*0.005)*30,  60+sin(timer*0.005)*10, 150+cos(timer*0.005)*10);			// ティーポットの移動
+	glTranslated(10+sin(timer*0.005)*30,  60+sin(timer*0.005)*10, 140+cos(timer*0.005)*10);			// ティーポットの移動
 	glRotatef(70.0, 1, 1, 0);		// ティーポットの回転
 	glutWireTeapot(20+5*cos(timer*0.01));					// Teapotの大きさ
 	glDisable(GL_COLOR_MATERIAL);
