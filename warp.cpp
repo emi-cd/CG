@@ -113,8 +113,6 @@ void Warp() {
 			}
 		}
 	}
-
-	std::cout << "Scene:" << Scene << std::endl;
 }
 
 // 次のシーンを設定する

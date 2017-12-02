@@ -125,9 +125,9 @@ void Initialize(void){
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position0);
 
 	// スポットライトの設定-------------------------------------- 
-	GLfloat lightDiffuse1[4]  = {0.7, 0.7, 0.7, 1.0};		// 拡散光
-	GLfloat lightAmbient1[4]  = {0.6, 0.6, 0.6, 1.0};		// 環境光
-	GLfloat lightSpecular1[4] = {0.7, 0.7, 0.7, 1.0};		// 鏡面光
+	GLfloat lightDiffuse1[4]  = {0.5, 0.5, 0.5, 1.0};		// 拡散光
+	GLfloat lightAmbient1[4]  = {0.3, 0.3, 0.3, 1.0};		// 環境光
+	GLfloat lightSpecular1[4] = {0.6, 0.6, 0.6, 1.0};		// 鏡面光
 	GLfloat light_position1[] = { 0.0, 30.0, 0.0, 1.0 }; 	// スポットライト
 	GLfloat spotDirrection[] = { 0.0, 30.0, 200.0 }; 			// スポットライトを向ける方向
 	glLightfv(GL_LIGHT1, GL_DIFFUSE,  lightDiffuse1);

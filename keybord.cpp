@@ -11,6 +11,7 @@
 void Keyboard(unsigned char key, int x, int y){
 	switch ( key ) {
 		case 'q':
+		case 'Q':
 			exit(0);
 			break;
 		case 'l':
@@ -38,7 +39,6 @@ void Keyboard(unsigned char key, int x, int y){
 		direction = LEFT;
 	}
 
-	std::cout << "rot_y:" << rot_y << std::endl;
 }
 
 //----------------------------------------------------
@@ -148,13 +148,6 @@ void SpecialKeyBord(int key, int x, int y){
 	}
 
 	Warp();
-
-	std::cout << "direction:" << direction << std::endl;
-	std::cout << "Z:" << ViewPointZ << ",SideZ:" << SideZ << std::endl; 
-	std::cout << "X:" << ViewPointX << ",SideX:" << SideX << std::endl;
-	std::cout << "rot_y:" << rot_y << std::endl;
-	std::cout << "teapot:" << mp[0] << "," << mp[1] << "," << mp[2] << "," << mp[3] << "," << mp[4] << std::endl;
-	std::cout << std::endl;
 }
 
 void go_left() {
