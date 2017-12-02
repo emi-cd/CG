@@ -10,7 +10,7 @@ public class Img {
 
 	public static void main(String args[]) {
 		MyImage image;
-		image = JpegFileReader.read("renga2.jpg");
+		image = JpegFileReader.read("imgs/renga2.jpg");
 
 		try{
 			File file = new File("renga3.txt");

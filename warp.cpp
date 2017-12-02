@@ -2,6 +2,7 @@
 #include <iostream>
 #include <time.h>
 #include <stdio.h>
+#include <list>
 #include <GLUT/glut.h>
 #include "display.hpp"
 #include "keybord.hpp"
@@ -13,7 +14,7 @@ const int SCENE = 4;
 
 // シーン事の行く先の数
 int scene_mp[SCENE] = {2, 2, 3, 2};
-int where_from = -1;
+std::list<int> where_from;
 
  Node *make_node(const int scene, Node* parent){
   Node *node = (Node*)malloc(sizeof(Node));
@@ -32,8 +33,7 @@ Node *insert_node(Node *parent) {
 	Node *node = make_node(rand()%SCENE, parent);
 	node->child_one = make_node(rand()%SCENE, node);
 	node->child_two = make_node(rand()%SCENE, node);
-	if (3 == node->num)
-		node->child_three = make_node(rand()%SCENE, node);
+	node->child_three = make_node(rand()%SCENE, node);
 	
 	return node;
 }
@@ -43,8 +43,7 @@ Node *make_Labyrinth(){
 	Node* n = make_node(Scene, NULL);
 	n->child_one = insert_node(n);
 	n->child_two = insert_node(n);
-	if (3 == n->num)
-		n->child_three = insert_node(n);
+	n->child_three = insert_node(n);
 	return n;
 }
 
@@ -56,17 +55,17 @@ void Warp() {
 			else if (60 < ViewPointX) { next(2); }
 			break;
 		case 1:
-			if (190 < ViewPointZ) { next(1); }
+			if (190 < ViewPointZ) { next(3); }
 			else if (60 < ViewPointX) { next(2); }
 			break;
 		case 2:
 			if (ViewPointX < -60) { next(1); }
-			else if (190 < ViewPointZ) { next(2); }
-			else if (60 < ViewPointX) { next(3); }
+			else if (190 < ViewPointZ) { next(3); }
+			else if (60 < ViewPointX) { next(2); }
 			break;
 		case 3:
-			if (190 < ViewPointZ) { next(1); }
-			else if (-60 > ViewPointX) { next(2); }
+			if (190 < ViewPointZ) { next(3); }
+			else if (ViewPointX < -60) { next(1); }
 			break;
 	}
 	if(ViewPointZ < 0) {
@@ -74,7 +73,7 @@ void Warp() {
 			old_scene = Scene;
 			node = node->parent;
 			Scene = node->scene;
-			switch(where_from){
+			switch(where_from.back()){
 				case 1:
 					ViewPointX = -60.0;
 					ViewPointZ = 130.0;
@@ -95,10 +94,11 @@ void Warp() {
 					ViewPointX = 0.0;
 					ViewPointZ = 200.0;
 					SideX = 0.0;
-					SideZ = 0.0;
+					SideZ = 400.0;
 					direction = BACK;
 					rot_y = 180.0;
 					break;
+				where_from.pop_back();
 			}
 		}
 	}
@@ -119,7 +119,7 @@ bool can_goal(void) {
 
 // 次のシーンを設定する
 void next(int n){
-	where_from = n;
+	where_from.push_back(n); 
 	switch(n){
 		case 1:
 			if(node->child_one){

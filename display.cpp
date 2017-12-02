@@ -56,12 +56,12 @@ int flag = 0;
 int last_teapot = -1;
 int old_scene = -1;
 
-// 空間
+// 空間の回転
 float rot_y = 0.0;
 
 
 //----------------------------------------------------
-// 関数プロトタイプ（後に呼び出す関数名と引数の宣言）
+// 関数プロトタイプ
 //----------------------------------------------------
 void Put_teapot(void);
 void Ground(void);
@@ -69,6 +69,7 @@ void Goal(void);
 void DrawString(std::string str, int x0, int y0, void *font = GLUT_BITMAP_TIMES_ROMAN_24);
 void print_teapot_state(void);
 void teapot(void);
+void Celling(void);
 
 //----------------------------------------------------
 // 描画の関数
@@ -91,7 +92,7 @@ void Display(void) {
 	GLfloat light_position0[] = {ViewPointX, 100.0, ViewPointZ, 1.0};	// 光源0の座標
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position0);
 
-	// fog
+	// fog-----------------------------
 	glFogf(GL_FOG_START, ViewPointZ+20.0);  //開始位置
 	glFogf(GL_FOG_END, ViewPointZ+70.0); //終了位置
 
@@ -99,7 +100,7 @@ void Display(void) {
 	glMatrixMode(GL_MODELVIEW);//行列モードの設定（GL_PROJECTION : 透視変換行列の設定、GL_MODELVIEW：モデルビュー変換行列）
 	glLoadIdentity();//行列の初期化
 	glViewport(0, 0, WindowWidth, WindowHeight);
-	//----------------------------------------------
+
 
 	glTranslated(ViewPointX, ViewPointY, ViewPointZ);
 	glRotatef(rot_y, 0.0f, 1.0f, 0.0f);
@@ -108,30 +109,35 @@ void Display(void) {
 	switch(Scene) {
 	case 0:
 		print_teapot_state();
+		Celling();
 		teapot();
 		Scene_one();
 		flag = 1;
 		break;
 	case 1:
 		print_teapot_state();
+		Celling();
 		teapot();
 		Scene_two();
 		flag = 1;
 		break;
 	case 2:
 		print_teapot_state();
+		Celling();
 		teapot();
 		Scene_three();
 		flag = 1;
 		break;
 	case 3:
 		print_teapot_state();
+		Celling();
 		teapot();
 		Scene_five();
 		flag = 1;
 		break;
 	case 4:
 		print_teapot_state();
+		Celling();
 		teapot();
 		Scene_four();
 		Put_teapot();
@@ -165,19 +171,17 @@ void Ground(void) {
 
 	glEnable(GL_COLOR_MATERIAL);
 
-	glPushMatrix();
-
 	// 大地
 	glColor3d(0.50196, 0.50196, 0.50196);  // 大地の色;
 	glBegin(GL_QUADS);
-	glVertex3f(-500.0, 0.0, -500.0);
-	glVertex3f( 500.0, 0.0, -500.0);
-	glVertex3f( 500.0, 0.0, -500.0);
-	glVertex3f( 500.0, 0.0,  500.0);
+	glVertex3f(-1000.0, 0.0, -1000.0);
+	glVertex3f( 1000.0, 0.0, -1000.0);
+	glVertex3f( 1000.0, 0.0,  1000.0);
+	glVertex3f(-1000.0, 0.0,  1000.0);
 	glEnd();
 
 	// 大地の線
-	glColor3d(0.41176, 0.41176, 0.41176);  // 大地の線の色
+	glColor3d(0.8529, 0.8529, 0.8529);  // 大地の線の色
 	glBegin(GL_LINES);
 	for(double lz = -ground_max_z ; lz <= ground_max_z; lz+=10.0){
 		glVertex3d(-ground_max_x, 0.2, lz);
@@ -189,10 +193,18 @@ void Ground(void) {
 	}
 	glEnd();
 
-	glPopMatrix();
-
 	glDisable(GL_COLOR_MATERIAL);
 
+}
+
+void Celling(void) {
+	glColor3d(0.50196, 0.50196, 0.50196);  // 大地の色;
+	glBegin(GL_QUADS);
+	glVertex3f(-1000.0, 70.0, -1000.0);
+	glVertex3f( 1000.0, 70.0, -1000.0);
+	glVertex3f( 1000.0, 70.0,  1000.0);
+	glVertex3f(-1000.0, 70.0,  1000.0);
+	glEnd();
 }
 
 //----------------------------------------------------
@@ -269,15 +281,15 @@ void Goal(void) {
 
 }
 
-// //----------------------------------------------------
-// // 文字描画
-// //----------------------------------------------------
+//----------------------------------------------------
+// 文字描画
+//----------------------------------------------------
 void DrawString(std::string str, int x, int y, void *font) {
     glDisable(GL_LIGHTING);
     // 平行投影にする
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
-    glColor3d(0.1, 0.1, 0.1);
+    glColor3d(1.0, 1.0, 1.0);
     glLoadIdentity();
     gluOrtho2D(0, WindowWidth, WindowHeight, 0);
     glMatrixMode(GL_MODELVIEW);
