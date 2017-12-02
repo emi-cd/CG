@@ -50,7 +50,7 @@ MaterialStruct ms_pearl  = {
 double timer = 0;
 int size = std::rand() % 3 + 5;			// Teapot のサイズ
 int tea_index = std::rand() % 20;		// Teapot の確率
-int mp[5] = {0, 0, 0, 0, 0};
+int mp[5] = {1, 1, 1, 1, 0};
 int x = 0;
 int flag = 0;
 int last_teapot = -1;
@@ -66,7 +66,7 @@ float rot_y = 0.0;
 void Put_teapot(void);
 void Ground(void);
 void Goal(void);
-void DrawString(std::string str, int x0, int y0, void *font = GLUT_BITMAP_TIMES_ROMAN_24);
+void DrawString(std::string str, int x0, int y0, int flag, void *font = GLUT_BITMAP_TIMES_ROMAN_24);
 void print_teapot_state(void);
 void teapot(void);
 void Celling(void);
@@ -106,46 +106,48 @@ void Display(void) {
 	glRotatef(rot_y, 0.0f, 1.0f, 0.0f);
 	glTranslated(-ViewPointX, -ViewPointY, -ViewPointZ);
 
-	switch(Scene) {
-	case 0:
-		print_teapot_state();
-		Celling();
-		teapot();
-		Scene_one();
-		flag = 1;
-		break;
-	case 1:
-		print_teapot_state();
-		Celling();
-		teapot();
-		Scene_two();
-		flag = 1;
-		break;
-	case 2:
-		print_teapot_state();
-		Celling();
-		teapot();
-		Scene_three();
-		flag = 1;
-		break;
-	case 3:
-		print_teapot_state();
-		Celling();
-		teapot();
-		Scene_five();
-		flag = 1;
-		break;
-	case 4:
-		print_teapot_state();
-		Celling();
-		teapot();
-		Scene_four();
-		Put_teapot();
-		flag = 0;
-		break;
-	case 5:
+	if(mp[0] + mp[1] + mp[2] + mp[3] + mp[4] != 5) {
+		switch(Scene) {
+		case 0:
+			print_teapot_state();
+			Celling();
+			teapot();
+			Scene_one();
+			flag = 1;
+			break;
+		case 1:
+			print_teapot_state();
+			Celling();
+			teapot();
+			Scene_two();
+			flag = 1;
+			break;
+		case 2:
+			print_teapot_state();
+			Celling();
+			teapot();
+			Scene_three();
+			flag = 1;
+			break;
+		case 3:
+			print_teapot_state();
+			Celling();
+			teapot();
+			Scene_five();
+			flag = 1;
+			break;
+		case 4:
+			print_teapot_state();
+			Celling();
+			teapot();
+			Scene_four();
+			Put_teapot();
+			flag = 0;
+			break;
+		}
+	}else {
+		glEnable(GL_LIGHT2);
 		Goal();
-		break;
 	}
 
 	// 大地
@@ -217,6 +219,10 @@ void Goal(void) {
 	glDisable(GL_FOG);
 	glClearColor(1.0, 0.98039, 0.94118, 1.0);
 	rot_y = 0.0;
+	ViewPointX = 0.0;
+	ViewPointZ = 0.0;
+	SideX = 0.0;
+	SideZ = 200.0;
 
 	// teapot1
 	glPushMatrix();
@@ -276,20 +282,23 @@ void Goal(void) {
 	glDisable(GL_COLOR_MATERIAL);
 	glPopMatrix();
 
-	DrawString("C O N G R A T U L A T I O N S ! !", 95, 95);
-	DrawString("G O A L !", 210, 150);
+	DrawString("C O N G R A T U L A T I O N S ! !", 95, 95, 0);
+	DrawString("G O A L !", 210, 150, 0);
 
 }
 
 //----------------------------------------------------
 // 文字描画
 //----------------------------------------------------
-void DrawString(std::string str, int x, int y, void *font) {
+void DrawString(std::string str, int x, int y, int flag, void *font) {
     glDisable(GL_LIGHTING);
     // 平行投影にする
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
-    glColor3d(1.0, 1.0, 1.0);
+    if(flag)
+    	glColor3d(1.0, 1.0, 1.0);
+    else 
+    	glColor3d(0.0, 0.0, 0.0);
     glLoadIdentity();
     gluOrtho2D(0, WindowWidth, WindowHeight, 0);
     glMatrixMode(GL_MODELVIEW);
@@ -396,7 +405,7 @@ void print_teapot_state(void){
 
 	std::string str(t_char2);
 
-	DrawString(str, 5, 20, GLUT_BITMAP_HELVETICA_10);
+	DrawString(str, 5, 20, 1, GLUT_BITMAP_HELVETICA_10);
 }
 
 //----------------------------------------------------

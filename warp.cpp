@@ -73,7 +73,19 @@ void Warp() {
 			old_scene = Scene;
 			node = node->parent;
 			Scene = node->scene;
-			switch(where_from.back()){
+
+			// とりあえずパッチ--------
+			int index = where_from.back();
+			where_from.pop_back();
+			if(Scene == 0 && index == 3)
+				index = 1;
+			else if(Scene == 1 && index == 1)
+				index = 2;
+			else if(Scene == 3 && index == 2)
+				index = 1;
+			// ---------------------
+
+			switch(index){
 				case 1:
 					ViewPointX = -60.0;
 					ViewPointZ = 130.0;
@@ -98,23 +110,11 @@ void Warp() {
 					direction = BACK;
 					rot_y = 180.0;
 					break;
-				where_from.pop_back();
 			}
 		}
 	}
 
 	std::cout << "Scene:" << Scene << std::endl;
-}
-
-// ゴールできるかどうか
-bool can_goal(void) {
-	int sum = 0;
-	for(int i = 0; i < 5; i++)
-		sum += mp[i];
-	if(sum == 5)
-		return true;
-	return false;
-
 }
 
 // 次のシーンを設定する
@@ -145,7 +145,6 @@ void next(int n){
 	}
 	old_scene = Scene;
 	Scene = node->scene;
-	if (can_goal()){ Scene = 5; }
 
 	make_init();
 

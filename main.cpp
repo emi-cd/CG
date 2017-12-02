@@ -138,6 +138,13 @@ void Initialize(void){
 	glLightfv(GL_LIGHT1, GL_POSITION, light_position1); 	 //座標をセット
 	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spotDirrection );//スポットライトの向ける方向（デフォルト (0,0,-1.0)）
 
+	// ゴール光源の設定-------------------------------------- 
+	GLfloat light_position2[] = {0, 30.0, 0.0, 1.0};	// 光源0の座標
+	glLightfv(GL_LIGHT2, GL_DIFFUSE,  lightDiffuse1);
+	glLightfv(GL_LIGHT2, GL_AMBIENT,  lightAmbient1);
+	glLightfv(GL_LIGHT2, GL_SPECULAR, lightSpecular1);
+	glLightfv(GL_LIGHT2, GL_POSITION, light_position2);
+
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);									// 光源0を利用
 
